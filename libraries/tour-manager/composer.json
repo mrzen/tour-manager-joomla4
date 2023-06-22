@@ -1,0 +1,21 @@
+{
+  "name": "rezkit/j4-tour-manager",
+  "description": "Tour Manager Integration for Joomla 4",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "leo",
+      "email": "leo.adamek@rezkit.app"
+    }
+  ],
+  "require": {
+    "softonic/graphql-client": "^2.2"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "RezKit\\Tours\\": "src"
+    }
+  }
+}
