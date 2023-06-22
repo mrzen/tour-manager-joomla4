@@ -8,6 +8,8 @@ use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use RezKit\Tours\Plugins\Sync\Extension\SyncTasks;
 
+require_once dirname(__FILE__) . '/../src/Extension/SyncTasks.php';
+
 return new class() implements ServiceProviderInterface {
 	public function register(Container $container)
 	{
@@ -16,11 +18,12 @@ return new class() implements ServiceProviderInterface {
 			function (Container $container) {
 				$plugin = new SyncTasks(
 					$container->get(DispatcherInterface::class),
-					PluginHelper::getPlugin('task', 'tour_manager_sync'),
+					(array)PluginHelper::getPlugin('task', 'tour_manager_sync'),
 				);
 
 				$plugin->setApplication(Factory::getApplication());
+				return $plugin;
 			}
-		)
+		);
 	}
-}
+};
