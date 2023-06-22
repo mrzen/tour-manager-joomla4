@@ -43,6 +43,10 @@ jobs:
         working-directory: libraries/tour-manager
         run: zip -qq -r ../../lib_tour-manager.zip .
 
+      - name: "Package Plugin: Tour Manager Sync"
+        working-directory: plugins/task/tour_manager_sync
+        run: zip -qq -r ../../../plg_task_tour_manager_sync.zip .
+
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -50,3 +54,4 @@ jobs:
           path: |
             package.xml
             lib_tour-manager.zip
+            plg_task_tour_manager_sync.zip
