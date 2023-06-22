@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="package" version="4.3" method="upgrade">
+    <name>RezKit Tour Manager Integration</name>
+    <description>Integrates Joomla 4.x with RezKit Tour Manager</description>
+    <author>RezKit Ltd.</author>
+    <packagename>tour-manager</packagename>
+    <creationDate>2023-06-21</creationDate>
+    <version>0.1.0</version>
+
+    <files>
+        <file type="library" id="tour-manager">lib_tour-manager.zip</file>
+    </files>
+</extension>
