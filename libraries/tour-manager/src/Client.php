@@ -6,7 +6,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Softonic\GraphQL\Client as GraphQLClient;
 use Softonic\GraphQL\ClientBuilder;
 
-require_once '../vendor/autoload.php';
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
 
 class Client
 {
