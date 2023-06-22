@@ -7,6 +7,7 @@ use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
 use Joomla\Component\Scheduler\Administrator\Task\Status;
 use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\Event\SubscriberInterface;
+use RezKit\Tours\TourSync;
 
 final class SyncTasks extends CMSPlugin implements SubscriberInterface
 {
@@ -33,6 +34,13 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 
 	private function tourSync(ExecuteTaskEvent $event): int
 	{
+		$syncList = new TourSync();
+		$holidays = $syncList->getHolidayList();
+		$this->logTask("Got a list of " . count($holidays) . " holidays to sync");
+
+		$event->setResult([
+			'holidays' => $holidays,
+		]);
 		return Status::OK;
 	}
 }

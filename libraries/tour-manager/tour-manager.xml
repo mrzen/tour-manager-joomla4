@@ -7,6 +7,7 @@
     <creationDate>21 Jun 2023</creationDate>
     <author>RezKit Ltd</author>
     <authorEmail>support@rezkit.app</authorEmail>
+    <namespace path="src">RezKit\Tours</namespace>
     <files>
         <folder>src</folder>
         <folder>vendor</folder>
