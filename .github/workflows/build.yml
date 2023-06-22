@@ -1,6 +1,9 @@
 name: Build & Release Package
 
 on:
+  push:
+    branches:
+      - master
   release:
     types:
       - released
