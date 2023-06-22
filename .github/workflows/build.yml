@@ -42,12 +42,8 @@ jobs:
         working-directory: libraries/tour-manager
         run: composer install --prefer-dist --no-progress
 
-      - name: Build Installer Artifact
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r tour-manager.zip libraries
       - name: Publish Artifact
         uses: actions/upload-artifact@v3
         with:
           name: tour-manager.zip
-          path: tour-manager.zip
+          path: .
