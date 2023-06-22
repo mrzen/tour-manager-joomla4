@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="library" version="4.[0-9]" method="upgrade">
+    <name>Tour Manager Client</name>
+    <libraryname>tour-manager</libraryname>
+    <version>1.0.0</version>
+    <copyright>(C) 2023 RezKit Ltd</copyright>
+    <creationDate>21 Jun 2023</creationDate>
+    <author>RezKit Ltd</author>
+    <authorEmail>support@rezkit.app</authorEmail>
+    <files>
+        <folder>src</folder>
+        <folder>vendor</folder>
+        <file>composer.lock</file>
+        <file>composer.json</file>
+    </files>
+</extension>

@@ -1,0 +1,50 @@
+name: Build & Release Package
+
+on:
+  release:
+    types:
+      - released
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer
+          #extensions: intl
+          #coverage: xdebug
+          #tools: phpcs, phpunit
+
+      - name: Validate composer.json and composer.lock
+        working-directory: libraries/tour-manager
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install PHP dependencies
+        working-directory: libraries/tour-manager
+        run: composer install --prefer-dist --no-progress
+
+      - name: Build Installer Artifact
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r tour-manager.zip libraries
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tour-manager.zip
+          path: tour-manager.zip
