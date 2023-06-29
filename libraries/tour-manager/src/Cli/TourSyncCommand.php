@@ -2,7 +2,6 @@
 
 namespace RezKit\Tours\Cli;
 
-
 use Joomla\Console\Command\AbstractCommand;
 use RezKit\Tours\TourSync;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,9 +19,13 @@ class TourSyncCommand extends AbstractCommand
 
 	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
-		$io = new SymfonyStyle($input, $output);
-		$sync = new TourSync();
-		$sync->sync();
+		$io     = new SymfonyStyle($input, $output);
+		$sync   = new TourSync();
+		$result = $sync->sync();
+
+		$io->table(['id', 'code', 'name'], $result);
+		$io->success("Successfully synced " . count($result) . " holidays");
+
 		return 0;
 	}
 }

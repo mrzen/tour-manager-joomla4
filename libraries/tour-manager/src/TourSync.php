@@ -8,7 +8,8 @@ use Joomla\Database\DatabaseInterface;
 
 class TourSync
 {
-	const LIST_HOLIDAYS_QUERY = /** @lang GraphQL */ <<<'QUERY'
+	const LIST_HOLIDAYS_QUERY = /** @lang GraphQL */
+		<<<'QUERY'
 		query syncHolidayList($cursor: String) {
 			holidays(after: $cursor, first: 100) {
 				pageInfo {
@@ -34,7 +35,7 @@ class TourSync
 	public function __construct()
 	{
 		$this->client = Client::create();
-		$this->log = Log::createDelegatedLogger();
+		$this->log    = Log::createDelegatedLogger();
 	}
 
 	/**
@@ -49,13 +50,15 @@ class TourSync
 
 		$data = $response->getData();
 
-		$holidays = array_map(fn (array $x) => $x['node'], $data['holidays']['edges']);
+		$holidays = array_map(fn(array $x) => $x['node'], $data['holidays']['edges']);
 
-		while ($response->getData()['holidays']['pageInfo']['hasNextPage']) {
+		while ($response->getData()['holidays']['pageInfo']['hasNextPage'])
+		{
 
-			$cursor = $response->getData()['holidays']['pageInfo']['endCursor'];
+			$cursor   = $response->getData()['holidays']['pageInfo']['endCursor'];
 			$response = $this->client->query(self::LIST_HOLIDAYS_QUERY, ['cursor' => $cursor]);
-			$pg = array_map(fn (array $x) => $x['node'], $data['holidays']['edges']);
+
+			$pg       = array_map(fn(array $x) => $x['node'], $data['holidays']['edges']);
 			$holidays = array_merge($holidays, $pg);
 		}
 
@@ -64,7 +67,7 @@ class TourSync
 
 	public function sync(): array
 	{
-		return array_map(fn ($h) => $this->syncHoliday($h), $this->getHolidayList());
+		return array_map(fn($h) => $this->syncHoliday($h), $this->getHolidayList());
 	}
 
 	private function syncHoliday(array $holiday): array
@@ -74,20 +77,42 @@ class TourSync
 		/**
 		 * @var DatabaseInterface $db
 		 */
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
-		$query->insert('#__ke_holidays')
-			->bindArray([
-				'id' => $holiday['id'],
-				'name' => $holiday['name'],
-				'code' => $holiday['code']
-			]);
+		// Find any existing record
+		$query->select('id')
+			->from('`#__ke_holidays`')
+			->where('rezkitid = :id')
+			->bind(':id', $holiday['id']);
 
 		$db->setQuery($query);
 
-		echo $query;
+		$id = $db->loadResult();
 
-		$db->execute();
+		if ($id === null)
+		{
+			$query = $db->getQuery(true);
+
+			$query->insert('`#__ke_holidays`')
+				->columns(['rezkitid', 'tourname', 'tourcode', 'alias'])
+				->values(implode(', ', [
+					$db->quote($holiday['id']),
+					$db->quote($holiday['name']),
+					$db->quote($holiday['code']),
+					$db->quote($holiday['name']),
+				]));
+
+			$db->setQuery($query);
+			$db->execute();
+
+			$id = $db->insertid();
+		}
+
+		return [
+			'id'   => $id,
+			'name' => $holiday['name'],
+			'code' => $holiday['code'],
+		];
 	}
 }
