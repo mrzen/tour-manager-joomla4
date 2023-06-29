@@ -34,13 +34,11 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 
 	private function tourSync(ExecuteTaskEvent $event): int
 	{
-		$syncList = new TourSync();
-		$holidays = $syncList->getHolidayList();
-		$this->logTask("Got a list of " . count($holidays) . " holidays to sync");
+		$sync = new TourSync();
+		$this->logTask("Starting Tour Sync");
 
-		$event->setResult([
-			'holidays' => $holidays,
-		]);
+		$holidays = $sync->sync();
+
 		return Status::OK;
 	}
 }
