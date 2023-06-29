@@ -86,6 +86,8 @@ class TourSync
 
 		$db->setQuery($query);
 
+		echo $query;
+
 		$db->execute();
 	}
 }
