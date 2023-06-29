@@ -16,8 +16,9 @@ return new class() implements ServiceProviderInterface {
 		$container->set(
 			PluginInterface::class,
 			function (Container $container) {
-				$plugin = new SyncTasks(
-					$container->get(DispatcherInterface::class),
+				$subject = $container->get(DispatcherInterface::class);
+				$plugin  = new SyncTasks(
+					$subject,
 					(array)PluginHelper::getPlugin('task', 'tour_manager_sync'),
 				);
 
