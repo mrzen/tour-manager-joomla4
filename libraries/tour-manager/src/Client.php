@@ -14,7 +14,7 @@ class Client
 
     public static function create(): GraphQLClient
     {
-		$params = ComponentHelper::getParams('com_ke');
+		$params = ComponentHelper::getParams('com_rktours');
 		$endpoint = $params->get('apiendpoint', self::DEFAULT_ENDPOINT);
 		$apiKey = $params->get('apikey');
 
