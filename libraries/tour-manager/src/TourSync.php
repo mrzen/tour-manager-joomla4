@@ -82,7 +82,7 @@ class TourSync
 
 		// Find any existing record
 		$query->select('id')
-			->from('`#__ke_holidays`')
+			->from('`#__holidays`')
 			->where('rezkitid = :id')
 			->bind(':id', $holiday['id']);
 
@@ -94,7 +94,7 @@ class TourSync
 		{
 			$query = $db->getQuery(true);
 
-			$query->insert('`#__ke_holidays`')
+			$query->insert('`#__holidays`')
 				->columns(['rezkitid', 'tourname', 'tourcode', 'alias'])
 				->values(implode(', ', [
 					$db->quote($holiday['id']),
