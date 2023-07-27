@@ -2,7 +2,6 @@
 
 namespace RezKit\Tours\Plugins\Sync\Extension;
 
-use Joomla\Application\ApplicationEvents;
 use Joomla\CMS\Console\Loader\WritableLoaderInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -35,7 +34,7 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 			'onTaskOptionsList'    => 'advertiseRoutines',
 			'onExecuteTask'        => 'standardRoutineHandler',
 			'onContentPrepareForm' => 'enhanceTaskItemForm',
-			ApplicationEvents::BEFORE_EXECUTE => 'registerServices',
+			'onAfterInitialise'    => 'registerServices',
 		];
 	}
 
@@ -44,7 +43,7 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 
 		Factory::getContainer()->share(
 			'rezkit.tours.sync',
-			function (ContainerInterface $container) {
+			static function (ContainerInterface $container) {
 				return new TourSyncCommand();
 			},
 			true
