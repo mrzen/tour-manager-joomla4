@@ -2,6 +2,7 @@
 
 namespace RezKit\Tours;
 
+use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Log\Log;
 use Joomla\Database\DatabaseInterface;
@@ -94,14 +95,15 @@ class TourSync
 		{
 			$query = $db->getQuery(true);
 
+			$alias = ApplicationHelper::stringURLSafe($holiday['name']);
+
 			$query->insert('`#__holidays`')
 				->columns(['rezkitid', 'tourname', 'tourcode', 'alias'])
-				->values(implode(', ', [
-					$db->quote($holiday['id']),
-					$db->quote($holiday['name']),
-					$db->quote($holiday['code']),
-					$db->quote($holiday['name']),
-				]));
+				->values(':id, :name, :code, :alias')
+				->bind(':id', $holiday['id'])
+				->bind(':name', $holiday['name'])
+				->bind(':code', $holiday['code'])
+				->bind(':alias', $alias);
 
 			$db->setQuery($query);
 			$db->execute();
