@@ -2,6 +2,7 @@
 
 namespace RezKit\Tours\Plugins\Sync\Extension;
 
+use Joomla\Application\ApplicationEvents;
 use Joomla\CMS\Console\Loader\WritableLoaderInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -35,6 +36,7 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 			'onExecuteTask'        => 'standardRoutineHandler',
 			'onContentPrepareForm' => 'enhanceTaskItemForm',
 			'onAfterInitialise'    => 'registerServices',
+			ApplicationEvents::BEFORE_EXECUTE => 'registerServices',
 		];
 	}
 
