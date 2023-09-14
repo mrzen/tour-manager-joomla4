@@ -13,6 +13,7 @@ use Joomla\Event\SubscriberInterface;
 use Psr\Container\ContainerInterface;
 use RezKit\Tours\Cli\TourSyncCommand;
 use RezKit\Tours\Client;
+use RezKit\Tours\Search;
 use RezKit\Tours\TourSync;
 
 final class SyncTasks extends CMSPlugin implements SubscriberInterface
@@ -42,7 +43,6 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 
 	public function registerServices(): void
 	{
-
 		Factory::getContainer()->share(
 			'rezkit.tours.sync',
 			static function (ContainerInterface $container) {
@@ -58,6 +58,13 @@ final class SyncTasks extends CMSPlugin implements SubscriberInterface
 			'rezkit.tours',
 			static function (ContainerInterface $container) {
 				return Client::create();
+			}
+		);
+
+		Factory::getcontainer()->share(
+			'rezkit.search',
+			static function (ContainerInterface $container) {
+				return Search::create();
 			}
 		);
 	}
