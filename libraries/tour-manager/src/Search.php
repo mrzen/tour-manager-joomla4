@@ -5,8 +5,8 @@ namespace RezKit\Tours;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\HttpFactory;
-use Joomla\Uri\Uri;
-use Nyholm\Psr7\Request;
+use JsonException;
+use Nyholm\Psr7\Uri;
 
 class Search
 {
@@ -15,7 +15,7 @@ class Search
 	private string $endpoint;
 
 	public function __construct(private string $apiKey, ?string $endpoint) {
-		$this->endpoiont = $endpoint ?? Client::DEFAULT_ENDPOINT;
+		$this->endpoint = $endpoint ?? Client::DEFAULT_ENDPOINT;
 		$this->http = HttpFactory::getHttp();
 	}
 
@@ -32,30 +32,29 @@ class Search
 	/**
 	 * Run a search
 	 *
-	 * @param array|string $query Search query parameters
+	 * @param   array|string  $query  Search query parameters
 	 *
 	 * @return array Search Response
+	 * @throws JsonException
 	 * @since 1.1.0
 	 */
 	public function search(array|string $query): array
 	{
-		$searchUrl = new Uri($this->endpoint);
-		$searchUrl->setPath('/holidays/search');
-		$searchUrl->setQuery($query);
+		$searchUrl = (new Uri($this->endpoint))
+			->withPath('/holidays/search');
 
-		$request = new Request(
-			'GET',
-			$searchUrl,
-			[
-				'Authorization' => 'Bearer ' . $this->apiKey,
-			],
-			null,
-		);
+		if (is_array($query)) {
+			$query = http_build_query($query);
+		}
 
-		$this->http->sendRequest($request);
+		$searchUrl = $searchUrl->withQuery($query);
 
-		$content = $request->getBody()->getContents();
+		$headers = [
+			'Authorization' => 'Bearer ' . $this->apiKey,
+			'Accept' => 'application/json',
+		];
 
-		return json_decode($content, associative: true);
+		$response = $this->http->get((string)$searchUrl, $headers);
+		return json_decode($response->body, associative: true, flags: JSON_THROW_ON_ERROR);
 	}
 }
