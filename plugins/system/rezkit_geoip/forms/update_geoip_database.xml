@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<form>
+    <fields name="params">
+        <fieldset name="task_params">
+            <field name="license_key"
+                   label="PLG_REZKIT_GEOIP_TASK_UPDATE_LICENSE_KEY"
+                   type="text"
+                   required="true" />
+        </fieldset>
+    </fields>
+</form>
