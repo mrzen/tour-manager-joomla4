@@ -38,10 +38,35 @@
                         required="true"
                         default="USD" />
 
+                <fieldset name="overrides"
+                          label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDES">
+
+                    <field name="overrides_country_uri"
+                           label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI"
+                           description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI_DESC"
+                           type="radio"
+                            default="1"
+                    >
+                        <option value="0">JNo</option>
+                        <option value="1">JYes</option>
+                    </field>
+
+                    <field name="overrides_currency_uri"
+                           label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI"
+                           description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI_DESC"
+                           type="radio"
+                           default="1"
+                    >
+                        <option value="0">JNo</option>
+                        <option value="1">JYes</option>
+                    </field>
+                </fieldset>
+
                 <field name="mapping"
                        type="subform"
                        icon="list"
                        label="PLG_REZKIT_GEOIP_CONFIG_MAPPING"
+                       description="PLG_REZKIT_GEOIP_CONFIG_MAPPING_DESC"
                        multiple="true" max="100">
                     <form>
                         <field name="country"
