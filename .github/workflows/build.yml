@@ -47,11 +47,16 @@ jobs:
         working-directory: plugins/system/tour_manager_sync
         run: zip -qq -r ../../../plg_system_tour_manager_sync.zip .
 
+      - name: "Package Plugin: GeoIP"
+        working-directory: plugins/system/rezkit_geoip
+        run: zip -qq -r ../../../plg_system_rezkit_geoip.zip .
+
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: tour-manager.zip
+          name: tour-manager
           path: |
             package.xml
             lib_tour-manager.zip
             plg_system_tour_manager_sync.zip
+            plg_system_rezkit_geoip.zip

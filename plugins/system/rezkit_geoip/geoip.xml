@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>plg_rezkit_geoip</name>
+    <author>RezKit Ltd</author>
+    <creationDate>2023-10-05</creationDate>
+    <copyright>(C) 2023 RezKit Ltd.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <authorEmail>info@rezkit.app</authorEmail>
+    <authorUrl>rezkit.app</authorUrl>
+    <version>0.1.0</version>
+    <description>PLG_REZKIT_GEOIP_XML_DESCRIPTION</description>
+    <namespace path="src">RezKit\Tours\Plugins\GeoIP</namespace>
+    <files>
+        <folder plugin="rezkit_geoip">services</folder>
+        <folder>src</folder>
+        <folder>forms</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_rezkit_geoip.ini</language>
+        <language tag="en-GB">language/en-GB/plg_rezkit_geoip.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="database_path"
+                       label="PLG_REZKIT_GEOIP_CONFIG_DB_PATH"
+                       type="string"
+                       default="libraries/tour-manager/geoip2.mmdb"
+                       required="true"
+                />
+            </fieldset>
+
+            <fieldset name="mapping">
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>
