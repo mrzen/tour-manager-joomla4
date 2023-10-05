@@ -23,8 +23,20 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			'onTaskOptionsList' => 'advertiseRoutines'
+			'onTaskOptionsList' => 'advertiseRoutines',
+			'onAfterInitialise' => 'handleRequest'
 		];
+	}
+
+	/**
+	 * Handle an incoming request
+	 *
+	 * @return void
+	 * @since 0.1.0
+	 */
+	public function handleRequest(): void
+	{
+		//$session = Factory::getContainer()->get('session');
 	}
 
 	private function updateGeoIPDatabase(ExecuteTaskEvent $event): int
