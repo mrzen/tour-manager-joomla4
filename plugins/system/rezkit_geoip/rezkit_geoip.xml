@@ -30,6 +30,11 @@
                        required="true"
                 />
 
+                <field name="license_key"
+                       label="PLG_REZKIT_GEOIP_CONFIG_KEY"
+                       type="string"
+                       required="true" />
+
                 <field
                         name="default_currency"
                         label="PLG_REZKIT_GEOIP_CONFIG_DEFAULT_CURRENCY"
@@ -38,29 +43,25 @@
                         required="true"
                         default="USD" />
 
-                <fieldset name="overrides"
-                          label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDES">
+                <field name="overrides_country_uri"
+                       label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI"
+                       description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI_DESC"
+                       type="radio"
+                        default="1"
+                >
+                    <option value="0">JNo</option>
+                    <option value="1">JYes</option>
+                </field>
 
-                    <field name="overrides_country_uri"
-                           label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI"
-                           description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_COUNTRY_URI_DESC"
-                           type="radio"
-                            default="1"
-                    >
-                        <option value="0">JNo</option>
-                        <option value="1">JYes</option>
-                    </field>
-
-                    <field name="overrides_currency_uri"
-                           label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI"
-                           description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI_DESC"
-                           type="radio"
-                           default="1"
-                    >
-                        <option value="0">JNo</option>
-                        <option value="1">JYes</option>
-                    </field>
-                </fieldset>
+                <field name="overrides_currency_uri"
+                       label="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI"
+                       description="PLG_REZKIT_GEOIP_CONFIG_OVERRIDE_CURRENCY_URI_DESC"
+                       type="radio"
+                       default="1"
+                >
+                    <option value="0">JNo</option>
+                    <option value="1">JYes</option>
+                </field>
 
                 <field name="mapping"
                        type="subform"
