@@ -16,8 +16,8 @@
         <folder>forms</folder>
     </files>
     <languages>
-        <language tag="en-GB">language/en-GB/plg_rezkit_geoip.ini</language>
-        <language tag="en-GB">language/en-GB/plg_rezkit_geoip.sys.ini</language>
+        <language tag="en-GB">language/en-GB/plg_system_rezkit_geoip.ini</language>
+        <language tag="en-GB">language/en-GB/plg_system_rezkit_geoip.sys.ini</language>
     </languages>
 
     <config>
@@ -29,10 +29,30 @@
                        default="libraries/tour-manager/geoip2.mmdb"
                        required="true"
                 />
-            </fieldset>
 
-            <fieldset name="mapping">
+                <field
+                        name="default_currency"
+                        label="PLG_REZKIT_GEOIP_CONFIG_DEFAULT_CURRENCY"
+                        type="string"
+                        size="3"
+                        required="true"
+                        default="USD" />
 
+                <field name="mapping"
+                       type="repeatable"
+                       icon="list"
+                       description="PLG_REZKIT_GEOIP_CONFIG_MAPPING">
+                    <fieldset hidden="true" name="mapping_modal" repeat="true">
+                        <field name="country"
+                               type="text"
+                               size="2"
+                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_COUNTRY" />
+                        <field name="currency"
+                               type="text"
+                               size="3"
+                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_CURRENCY" />
+                    </fieldset>
+                </field>
             </fieldset>
         </fields>
     </config>
