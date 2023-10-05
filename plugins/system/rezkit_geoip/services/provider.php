@@ -7,7 +7,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use RezKit\Tours\Plugin\GeoIP\Extension\GeoIP;
+use RezKit\Tours\Plugins\GeoIP\Extension\GeoIP;
 
 return new class() implements ServiceProviderInterface {
 	/**

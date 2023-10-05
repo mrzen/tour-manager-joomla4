@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\Tours\Plugin\GeoIP\Extension;
+namespace RezKit\Tours\Plugins\GeoIP\Extension;
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
