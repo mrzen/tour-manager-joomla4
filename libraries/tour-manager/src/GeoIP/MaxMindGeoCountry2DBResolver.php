@@ -1,5 +1,4 @@
 <?php
-
 namespace RezKit\Tours\GeoIP;
 
 use GeoIp2\Database\Reader;

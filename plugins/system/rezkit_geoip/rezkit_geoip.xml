@@ -23,6 +23,13 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
+                <field name="resolver"
+                       label="PLG_REZKIT_GEOIP_CONFIG_RESOLVER"
+                       required="true"
+                       default="maxmind.country2db">
+                    <option name="maxmind.country2db">MaxMind® GeoCountry2 Database</option>
+                </field>
+
                 <field name="database_path"
                        label="PLG_REZKIT_GEOIP_CONFIG_DB_PATH"
                        type="string"
