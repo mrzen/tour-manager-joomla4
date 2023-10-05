@@ -39,19 +39,20 @@
                         default="USD" />
 
                 <field name="mapping"
-                       type="repeatable"
+                       type="subform"
                        icon="list"
-                       description="PLG_REZKIT_GEOIP_CONFIG_MAPPING">
-                    <fieldset hidden="true" name="mapping_modal" repeat="true">
+                       label="PLG_REZKIT_GEOIP_CONFIG_MAPPING"
+                       multiple="true" max="100">
+                    <form>
                         <field name="country"
+                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_COUNTRY"
                                type="text"
-                               size="2"
-                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_COUNTRY" />
+                               size="2" />
                         <field name="currency"
+                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_CURRENCY"
                                type="text"
-                               size="3"
-                               label="PLG_REZKIT_GEOIP_CONFIG_MAPPING_CURRENCY" />
-                    </fieldset>
+                               size="3" />
+                    </form>
                 </field>
             </fieldset>
         </fields>
