@@ -1,6 +1,7 @@
 <?php
 namespace RezKit\Tours\GeoIP;
 
+use Exception;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 use GeoIp2\Model\Country;
@@ -21,7 +22,11 @@ class MaxMindGeoCountry2DBResolver implements Resolver
 
 	public function country(string $ip): ?string
 	{
-		return $this->reader->country($ip)->country->isoCode;
+		try {
+			return $this->reader->country($ip)->country->isoCode;
+		} catch (Exception $_e) {
+			return null;
+		}
 	}
 
 	public function city(string $ip): ?string

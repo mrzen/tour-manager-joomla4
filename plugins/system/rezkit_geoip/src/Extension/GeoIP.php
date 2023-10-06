@@ -2,19 +2,19 @@
 
 namespace RezKit\Tours\Plugins\GeoIP\Extension;
 
+use Joomla\Application\ApplicationEvents;
 use Joomla\CMS\Console\Loader\WritableLoaderInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Scheduler\Administrator\Event\ExecuteTaskEvent;
 use Joomla\Component\Scheduler\Administrator\Task\Status;
 use Joomla\Component\Scheduler\Administrator\Traits\TaskPluginTrait;
 use Joomla\DI\Container;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Session\Session;
-use Psr\Container\ContainerInterface;
 use RezKit\Tours\Cli\UpdateGeoIPDatabaseCommand;
+use RezKit\Tours\GeoIP\DatabaseUpdater;
 use RezKit\Tours\GeoIP\MaxMindGeoCountry2DBResolver;
 use RezKit\Tours\GeoIP\Resolver;
 
@@ -37,8 +37,33 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 	{
 		return [
 			'onTaskOptionsList' => 'advertiseRoutines',
-			'onAfterInitialise' => 'handleRequest'
+			'onAfterInitialise' => 'handleRequest',
+			ApplicationEvents::BEFORE_EXECUTE => 'configureServices',
 		];
+	}
+
+	public function configureServices(): void
+	{
+		$container = Factory::getContainer();
+		$container->share(
+			UpdateGeoIPDatabaseCommand::class,
+			static function (Container $container) {
+				return new UpdateGeoIPDatabaseCommand();
+			},
+			true
+		)->alias('rezkit.geoip.update', UpdateGeoIPDatabaseCommand::class);
+
+		$container->get(WritableLoaderInterface::class)
+			->add('rezkit:geoip:update', UpdateGeoIPDatabaseCommand::class);
+
+		$container->share(
+			DatabaseUpdater::class,
+			function (Container $container) {
+				$params = json_decode(PluginHelper::getPlugin('system', 'rezkit_geoip')->params, true);
+				return new DatabaseUpdater($params);
+			},
+			true
+		)->alias('rezkit.geoip.updater', DatabaseUpdater::class);
 	}
 
 	/**
@@ -54,20 +79,9 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 		$container->alias('rezkit.geoip.resolver', MaxMindGeoCountry2DBResolver::class)
 			->share(MaxMindGeoCountry2DBResolver::class, function (Container $container) {
 					$params = (array)PluginHelper::getPlugin('system', 'rezkit_geoip');
-					$path = json_decode($params, true)['database_path'];
-					return new MaxMindGeoCountry2DBResolver($path);
+					$path = json_decode($params['params'], true)['database_path'];
+					//return new MaxMindGeoCountry2DBResolver($path);
 			}, true);
-
-
-		$container->share(
-			'rezkit.geoip.update',
-			static function (ContainerInterface $container) {
-				return new UpdateGeoIPDatabaseCommand();
-			},
-			true
-		);
-
-		Factory::getContainer()->get(WritableLoaderInterface::class)->add('rezkit:geoip:update', 'rezkit.geoip.update');
 
 		/** @var Session $session */
 		$session = $container->get('session');
@@ -76,7 +90,7 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 			/** @var Resolver $resolver */
 			$resolver = $container->get('rezkit.geoip.resolver');
 			$ip = '127.0.0.1';
-			$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
+			//$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
 		}
 
 		if (!$session->get(static::SESSION_KEY_CURRENCY)) {
@@ -96,7 +110,12 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 
 	private function updateGeoIPDatabase(ExecuteTaskEvent $event): int
 	{
-		$uri = new Uri("https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=YOUR_LICENSE_KEY&suffix=tar.gz");
+		/** @var DatabaseUpdater $updater */
+		$updater = Factory::getContainer()->get(DatabaseUpdater::class);
+
+		if ($updater->requiresUpdate()) {
+			$updater->updateDatabase();
+		}
 
 		return Status::OK;
 	}
