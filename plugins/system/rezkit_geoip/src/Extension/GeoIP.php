@@ -80,7 +80,7 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 			->share(MaxMindGeoCountry2DBResolver::class, function (Container $container) {
 					$params = (array)PluginHelper::getPlugin('system', 'rezkit_geoip');
 					$path = json_decode($params['params'], true)['database_path'];
-					//return new MaxMindGeoCountry2DBResolver($path);
+					return new MaxMindGeoCountry2DBResolver(JPATH_ROOT . '/' . $path);
 			}, true);
 
 		/** @var Session $session */
@@ -89,8 +89,10 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 		if (!$session->get(static::SESSION_KEY_COUNTRY)) {
 			/** @var Resolver $resolver */
 			$resolver = $container->get('rezkit.geoip.resolver');
-			$ip = '127.0.0.1';
-			//$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
+			
+			if ($resolver) {
+				$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
+			}
 		}
 
 		if (!$session->get(static::SESSION_KEY_CURRENCY)) {
