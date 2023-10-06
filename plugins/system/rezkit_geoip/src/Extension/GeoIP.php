@@ -85,13 +85,30 @@ class GeoIP extends CMSPlugin implements SubscriberInterface
 
 		/** @var Session $session */
 		$session = $container->get('session');
+		$input = Factory::getApplication()->input;
+
+		if ($this->params->get('overrides_country_uri') && $country = $input->getWord('cc')) {
+			$session->set(static::SESSION_KEY_COUNTRY, $country);
+		}
+
+		if ($this->params->get('overrides_currency_uri') && $currency = $input->getWord('ccy')) {
+			$session->set(static::SESSION_KEY_CURRENCY, $currency);
+		}
 
 		if (!$session->get(static::SESSION_KEY_COUNTRY)) {
 			/** @var Resolver $resolver */
 			$resolver = $container->get('rezkit.geoip.resolver');
-			
+
 			if ($resolver) {
-				$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
+				$ip = $_SERVER['REMOTE_ADDR'];
+
+				if ($ip) {
+					try {
+						$session->set(static::SESSION_KEY_COUNTRY, $resolver->country($ip));
+					} catch (Exception $e) {
+						$session->set(static::SESSION_KEY_COUNTRY, 'XU');
+					}
+				}
 			}
 		}
 
