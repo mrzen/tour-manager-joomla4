@@ -2,9 +2,15 @@
 
 namespace RezKit\Tours\GeoIP;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Uri\Uri;
+use RuntimeException;
 
 /**
  * GeoIP Database Updater
@@ -38,8 +44,29 @@ final class DatabaseUpdater {
      */
     public function requiresUpdate(): bool
     {
-        // TODO: Check if an update is required
-        return true;
+        $lastUpdated = $this->getLastUpdated();
+        if (!$lastUpdated) {
+            return true;
+        }
+
+        $url = $this->getDownloadUri()->toString();
+        $head = $this->http->head($url);
+
+        $lastModified = current($head->getHeader('last-modified'));
+        $lastModified = DateTimeImmutable::createFromFormat(DateTimeInterface::RFC7231, $lastModified);
+
+        return $lastModified > $lastUpdated;
+    }
+
+    public function getLastUpdated(): ?DateTimeInterface
+    {
+        $updated = $this->cache->get('last_updated', 'rezkit:geoip:update');
+
+        if ($updated === false) {
+            return null;
+        }
+
+        return new DateTimeImmutable('@' . $updated);
     }
 
     /**
@@ -48,22 +75,43 @@ final class DatabaseUpdater {
     public function updateDatabase(): void
     {
         $uri = $this->getDownloadUri();
+        $tempPath = Factory::getApplication()->getConfig()->get('tmp_path');
+        $tempName = tempnam($tempPath, 'geoip_db_') . '.tar.gz';
 
         $response = $this->http->get($uri->toString());
-        $body = $response->getBody();
+        $data = $response->getBody()->getContents();
 
-        $content = fopen('php://memory', 'w+b');
+        file_put_contents($tempName, $data);
 
-        while (!$body->eof()) {
-            fwrite($content, $body->read(1024));
+        // There's not much we can do to avoid using popen and the `tar` command.
+        // Every alternative is either bad wrapper, or broken.
+        $entries = explode("\n", `tar tzf $tempName`);
+
+        $databaseFileName = array_filter($entries, static function ($x) {
+            return str_ends_with($x, '.mmdb');
+        });
+
+        if (!count($databaseFileName)) {
+            Log::add('Downloaded a GeoIP update with no database included', Log::ERROR);
+            File::delete($tempName);
+            return;
         }
 
-        rewind($content);
-        $header = gzread($content, 1024);
+        $databaseFileName = current($databaseFileName);
 
-        dump($header);
+        // Extract the database file itself
+        shell_exec("tar -C $tempPath -xvzf $tempName $databaseFileName");
+        $databaseFile = $tempPath . '/' . $databaseFileName;
+        $targetFile = JPATH_ROOT . '/' . $this->params['database_path'];
+
+        if (!File::move($databaseFile, $targetFile)) {
+            throw new RuntimeException("Unable to move $databaseFile to $targetFile");
+        }
+
+        File::delete($tempName);
+
+        $this->cache->store(time(), 'last_updated', 'rezkit:geoip:update');
     }
-
 
     public function getDownloadUri(): Uri
     {

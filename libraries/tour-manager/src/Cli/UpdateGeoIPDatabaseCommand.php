@@ -2,13 +2,12 @@
 
 namespace RezKit\Tours\Cli;
 
+use DateTimeInterface;
 use Joomla\CMS\Factory;
 use Joomla\Console\Command\AbstractCommand;
-use Joomla\Http\Http;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateGeoIPDatabaseCommand extends AbstractCommand
 {
@@ -16,25 +15,27 @@ class UpdateGeoIPDatabaseCommand extends AbstractCommand
 
 	public function configure(): void
 	{
-		$this->setDescription('Update the MaxMind® GeoIP Database');
-		$this->addOption('force', 'f', InputArgument::OPTIONAL,
+		$this->setDescription('Update the MaxMind GeoIP Database');
+		$this->addOption('force', 'f', InputOption::VALUE_NONE,
 			'Force the database to be updated, even if it appears to be up-to-date');
 	}
 
 	protected function doExecute(InputInterface $input, OutputInterface $output): int
 	{
-		$io = new SymfonyStyle($input, $output);
-		$force = $input->getArgument('force');
+		$updater = Factory::getContainer()->get('rezkit.geoip.updater');
+		$force = $input->getOption('force');
 
-		if ($force || $this->requiresUpdate()) {
-			$io->info('Database requires updating. Downloading update');
+		$output->writeln('Database was last updated: ' . $updater->getLastUpdated()?->format(DateTimeInterface::RFC7231));
+		$output->writeln('Checking for newer available database updates.');
 
-			$http = Factory::getContainer()->get(Http::class);
+		if ($force || $updater->requiresUpdate()) {
+			$output->writeln('Database requires updating, Downloading update');
+			$updater->updateDatabase();
+			$output->writeln('Database updated');
+		} else {
+			$output->writeln('Database appears to be up-to-date.');
 		}
-	}
 
-	private function requiresUpdate(): bool
-	{
-		return true;
+		return 0;
 	}
 }
