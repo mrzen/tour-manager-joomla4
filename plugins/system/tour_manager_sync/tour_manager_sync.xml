@@ -11,7 +11,7 @@
 	<description>PLG_TASK_TOUR_MANAGER_SYNC_XML_DESCRIPTION</description>
 	<namespace path="src">RezKit\Tours\Plugins\Sync</namespace>
 	<files>
-		<folder plugin="toursearch">services</folder>
+		<folder plugin="tour_manager_sync">services</folder>
 		<folder>src</folder>
 		<folder>forms</folder>
 	</files>
