@@ -15,7 +15,7 @@ use RezKit\Tours\Cli\TourSyncCommand;
 use RezKit\Tours\Client;
 use RezKit\Tours\Search;
 use RezKit\Tours\TourSync;
-
+great,
 final class SyncTasks extends CMSPlugin implements SubscriberInterface
 {
 	use TaskPluginTrait;

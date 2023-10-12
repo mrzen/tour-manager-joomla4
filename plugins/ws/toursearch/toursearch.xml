@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension version="4.0" type="plugin" group="webservices">
+    <name>plg_webservices_rktours</name>
+    <author>Mr Zen</author>
+    <creationDate>2023-10-12</creationDate>
+    <copyright>2023 Mr Zen Ltd</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>support@mrzen.com</authorEmail>
+    <authorUrl>http://mrzen.com</authorUrl>
+    <version>0.1.0</version>
+    <description>PLG_WS_TOURSEARCH_XML_DESCRIPTION</description>
+    <namespace path="src">RezKit\Tours\Plugins\Search</namespace>
+    <files>
+        <folder plugin="toursearch">services</folder>
+        <folder>src</folder>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/plg_webservices_toursearch.ini</language>
+        <language tag="en-GB">en-GB/plg_webservices_toursearch.sys.ini</language>
+    </languages>
+</extension>

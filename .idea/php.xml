@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/league/oauth2-client" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/composer" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/softonic/graphql-client" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/softonic/guzzle-oauth2-middleware" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/../../joomla/joomla-432" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/maxmind/web-service-common" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/geoip2/geoip2" />
+      <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/maxmind-db/reader" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/libraries/tour-manager/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>

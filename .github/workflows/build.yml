@@ -51,6 +51,10 @@ jobs:
         working-directory: plugins/system/rezkit_geoip
         run: zip -qq -r ../../../plg_system_rezkit_geoip.zip .
 
+      - name: "Package Plugin: Tour Search"
+        working-directory: plugins/ws/toursearch
+        run: zip -qq -r ../../../plg_ws_rezkit_toursearch.zip .
+
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -60,3 +64,4 @@ jobs:
             lib_tour-manager.zip
             plg_system_tour_manager_sync.zip
             plg_system_rezkit_geoip.zip
+            plg_ws_toursearch.zip
