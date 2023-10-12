@@ -52,8 +52,8 @@ jobs:
         run: zip -qq -r ../../../plg_system_rezkit_geoip.zip .
 
       - name: "Package Plugin: Tour Search"
-        working-directory: plugins/ws/toursearch
-        run: zip -qq -r ../../../plg_ws_toursearch.zip .
+        working-directory: plugins/system/toursearch
+        run: zip -qq -r ../../../plg_system_toursearch.zip .
 
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3

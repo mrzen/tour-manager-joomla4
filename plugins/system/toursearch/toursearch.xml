@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<extension version="4.0" type="plugin" group="webservices">
-    <name>plg_webservices_rktours</name>
+<extension version="4.0" type="plugin" group="system">
+    <name>PLG_SYSTEM_TOURSEARCH</name>
     <author>Mr Zen</author>
     <creationDate>2023-10-12</creationDate>
     <copyright>2023 Mr Zen Ltd</copyright>
@@ -15,7 +15,7 @@
         <folder>src</folder>
     </files>
     <languages folder="language">
-        <language tag="en-GB">en-GB/plg_webservices_toursearch.ini</language>
-        <language tag="en-GB">en-GB/plg_webservices_toursearch.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_system_toursearch.ini</language>
+        <language tag="en-GB">en-GB/plg_system_toursearch.sys.ini</language>
     </languages>
 </extension>

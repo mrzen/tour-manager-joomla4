@@ -6,7 +6,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use RezKit\Tours\Plugins\Search\Plugin;
+use RezKit\Tours\Plugins\Search\TourSearch;
 
 return new class() implements ServiceProviderInterface {
 
@@ -17,9 +17,9 @@ return new class() implements ServiceProviderInterface {
 			function (Container $container) {
 				$subject = $container->get(DispatcherInterface::class);
 
-				$plugin = new Plugin(
+				$plugin = new TourSearch(
 					$subject,
-					(array) PluginHelper::getPlugin('webservices', 'toursearch')
+					(array) PluginHelper::getPlugin('system', 'toursearch')
 				);
 
 				$plugin->setApplication(Factory::getApplication());
