@@ -9,6 +9,10 @@ use Joomla\Database\ParameterType;
 
 class TourSearch extends CMSPlugin
 {
+	/**
+	 * @return array<string, object> Holiday routings
+	 * @since 0.1.0
+	 */
 	public function onAjaxHolidaylinks(): array
 	{
 		$input = Factory::getApplication()->input;
@@ -34,5 +38,28 @@ class TourSearch extends CMSPlugin
 		}
 
 		return $records;
+	}
+
+	/**
+	 * @return array<string,object> Review Scores
+	 * @since 0.1.0
+	 */
+	public function onAjaxHolidayreviews(): array
+	{
+		$input = Factory::getApplication()->input;
+		$codes = explode(',', $input->getString('codes'));
+
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$q = $db->getQuery(true);
+
+		$q = $q->select('trip_code, COUNT(*) as count, AVG(rating) as score')
+			->from('#__ugc_reviews')
+			->whereIn('trip_code', $codes, ParameterType::STRING)
+			->where('state = 1')
+			->where('rating > 0')
+			->group('trip_code');
+
+		$db->setQuery($q);
+		return $db->loadObjectList('trip_code');
 	}
 }

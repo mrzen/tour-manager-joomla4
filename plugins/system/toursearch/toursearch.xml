@@ -8,7 +8,7 @@
     <authorEmail>support@mrzen.com</authorEmail>
     <authorUrl>http://mrzen.com</authorUrl>
     <version>0.1.0</version>
-    <description>PLG_WS_TOURSEARCH_XML_DESCRIPTION</description>
+    <description>PLG_SYSTEM_TOURSEARCH_XML_DESCRIPTION</description>
     <namespace path="src">RezKit\Tours\Plugins\Search</namespace>
     <files>
         <folder plugin="toursearch">services</folder>
