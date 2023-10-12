@@ -64,4 +64,4 @@ jobs:
             lib_tour-manager.zip
             plg_system_tour_manager_sync.zip
             plg_system_rezkit_geoip.zip
-            plg_ws_toursearch.zip
+            plg_system_toursearch.zip
