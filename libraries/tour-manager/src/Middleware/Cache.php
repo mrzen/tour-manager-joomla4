@@ -2,10 +2,10 @@
 
 namespace RezKit\Tours\Middleware;
 
-use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\Promise;
-use http\Env\Response;
+use GuzzleHttp\Psr7\Response;
 use Joomla\CMS\Cache\Cache as JoomlaCache;
+use Joomla\CMS\Profiler\Profiler;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,12 +26,26 @@ class Cache
 		return function (RequestInterface $request, array $options) use (&$next) {
 			$key = $this->getCacheKey($request);
 
+			$cacheItem = $this->cache->get($key, 'tour_manager:graphql');
+
+			if ($cacheItem !== false) {
+				$data = json_decode($cacheItem, true, 8, JSON_THROW_ON_ERROR);
+
+				$response = new Response($data['status'], $data['headers'], $data['body']);
+				Profiler::getInstance('Application')->mark('Tour Manger GraphQL Query (Cached)');
+
+				return $response;
+			}
+
 			/** @var Promise $promise */
 			$promise = $next($request, $options);
 
 			return $promise->then(
 				function (ResponseInterface $response) use ($request, $key) {
 					$this->store($key, $response);
+
+					Profiler::getInstance('Application')->mark('Tour Manger GraphQL Query');
+
 					return $response;
 				}
 			);
@@ -54,6 +68,6 @@ class Cache
 			'body' => $response->getBody()->getContents(),
 		];
 
-		$this->cache->store($data, $key, 'tour_manager:graphql');
+		$this->cache->store(json_encode($data, JSON_PRETTY_PRINT), $key, 'tour_manager:graphql');
 	}
 }
