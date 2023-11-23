@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\Middleware;
+namespace RezKit\Tours\Middleware;
 
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\Promise;
