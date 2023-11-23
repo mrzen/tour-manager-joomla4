@@ -4,6 +4,7 @@ namespace RezKit\Tours\Middleware;
 
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\Promise;
+use http\Env\Response;
 use Joomla\CMS\Cache\Cache as JoomlaCache;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -25,18 +26,12 @@ class Cache
 		return function (RequestInterface $request, array $options) use (&$next) {
 			$key = $this->getCacheKey($request);
 
-			$cachedResponse = $this->cache->get($key, 'tour_manager:graphql');
-
-			if ($cachedResponse !== false) {
-				return new FulfilledPromise($cachedResponse);
-			}
-
 			/** @var Promise $promise */
 			$promise = $next($request, $options);
 
 			return $promise->then(
 				function (ResponseInterface $response) use ($request, $key) {
-					$this->cache->store($response, $key, 'tour_manager:graphql');
+					$this->store($key, $response);
 					return $response;
 				}
 			);
@@ -49,5 +44,16 @@ class Cache
 		$key = $request->getMethod() . $request->getRequestTarget() . $bodySum;
 
 		return $key;
+	}
+
+	public function store(string $key, ResponseInterface $response): void
+	{
+		$data = [
+			'headers' => $response->getHeaders(),
+			'status' => $response->getStatusCode(),
+			'body' => $response->getBody()->getContents(),
+		];
+
+		$this->cache->store($data, $key, 'tour_manager:graphql');
 	}
 }
