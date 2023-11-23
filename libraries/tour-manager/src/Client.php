@@ -3,6 +3,7 @@
 namespace RezKit\Tours;
 
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
+use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Joomla\CMS\Component\ComponentHelper;
@@ -25,15 +26,8 @@ class Client
 		$apiKey = $params->get('apikey');
 		$ttl = $params->get('cache_ttl',  900);
 
-		$cacheDir = JPATH_ROOT . '/cache/tour_manager';
-
-		$cacheHandler = DoctrineProvider::wrap(new FilesystemAdapter('tour_manager_graphql', $ttl, $cacheDir));
-		$cacheStrategy = new GreedyCacheStrategy(new DoctrineCacheStorage($cacheHandler), $ttl);
-		$middleware = new CacheMiddleware($cacheStrategy);
-		$middleware->setHttpMethods(['POST','GET']);
-
 		$stack = new HandlerStack();
-		$stack->push($middleware);
+		$stack->setHandler(new CurlHandler());
 
 		return ClientBuilder::build(
 			$endpoint,
