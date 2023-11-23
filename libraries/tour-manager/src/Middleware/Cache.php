@@ -24,8 +24,9 @@ class Cache
 	public function __invoke(callable $next): callable
 	{
 		return function (RequestInterface $request, array $options) use (&$next) {
-			$key = $this->getCacheKey($request);
+			Profiler::getInstance('Application')->mark('Tour Manger GraphQL Query (Request)');
 
+			$key = $this->getCacheKey($request);
 			$cacheItem = $this->cache->get($key, 'tour_manager:graphql');
 
 			if ($cacheItem !== false) {
@@ -44,7 +45,7 @@ class Cache
 				function (ResponseInterface $response) use ($request, $key) {
 					$this->store($key, $response);
 
-					Profiler::getInstance('Application')->mark('Tour Manger GraphQL Query');
+					Profiler::getInstance('Application')->mark('Tour Manger GraphQL Query (Response)');
 
 					return $response;
 				}

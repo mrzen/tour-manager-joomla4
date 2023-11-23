@@ -5,6 +5,7 @@ namespace RezKit\Tours;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Http\Http;
 use Joomla\CMS\Http\HttpFactory;
+use Joomla\CMS\Profiler\Profiler;
 use JsonException;
 use Nyholm\Psr7\Uri;
 
@@ -55,6 +56,9 @@ class Search
 		];
 
 		$response = $this->http->get((string)$searchUrl, $headers);
+
+		Profiler::getInstance('Application')->mark('Tour Manager Search');
+
 		return json_decode($response->body, associative: true, flags: JSON_THROW_ON_ERROR);
 	}
 }

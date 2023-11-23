@@ -5,6 +5,7 @@ namespace RezKit\Tours;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
+use RezKit\Tours\Middleware\Cache;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Joomla\CMS\Component\ComponentHelper;
 use Kevinrob\GuzzleCache\CacheMiddleware;
@@ -28,6 +29,7 @@ class Client
 
 		$stack = new HandlerStack();
 		$stack->setHandler(new CurlHandler());
+		$stack->push(new Cache($ttl));
 
 		return ClientBuilder::build(
 			$endpoint,
