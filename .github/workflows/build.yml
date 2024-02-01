@@ -55,6 +55,10 @@ jobs:
         working-directory: plugins/system/toursearch
         run: zip -qq -r ../../../plg_system_toursearch.zip .
 
+      - name: "Package Plugin: Tour Site Map"
+        working-directory: plugins/system/tours_sitemap
+        run: zip -qq -r ../../../plg_system_tours_sitemap.zip .
+
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -65,3 +69,4 @@ jobs:
             plg_system_tour_manager_sync.zip
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
+            plg_system_tours_sitemap.zip
