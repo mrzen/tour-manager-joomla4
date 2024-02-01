@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="osmap" version="3.7" method="upgrade">
+    <name>OSMap - Tours Site Map</name>
+    <creationDate>2024-02-01</creationDate>
+    <copyright>(C) 2024 RezKit Ltd.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <author>RezKit Ltd</author>
+    <authorEmail>info@rezkit.app</authorEmail>
+    <authorUrl>rezkit.app</authorUrl>
+    <version>1.0.0</version>
+    <description>OSMap Plugin for adding tours to site map</description>
+    <namespace path="src">RezKit\Tours\Plugins\TourSiteMap</namespace>
+    <files>
+        <folder plugin="tours_sitemap">services</folder>
+        <folder>src</folder>
+        <folder>forms</folder>
+    </files>
+</extension>
