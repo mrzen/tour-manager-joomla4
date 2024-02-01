@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="plugin" group="osmap" version="3.7" method="upgrade">
-    <name>OSMap - Tours Site Map</name>
+    <name>plg_tours_sitemap</name>
     <creationDate>2024-02-01</creationDate>
     <copyright>(C) 2024 RezKit Ltd.</copyright>
     <license>GNU General Public License version 2 or later</license>
