@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension type="plugin" group="osmap" version="3.7" method="upgrade">
+<extension type="plugin" group="osmap" method="upgrade">
     <name>plg_tours_sitemap</name>
     <creationDate>2024-02-01</creationDate>
     <copyright>(C) 2024 RezKit Ltd.</copyright>
@@ -13,6 +13,5 @@
     <files>
         <folder plugin="tours_sitemap">services</folder>
         <folder>src</folder>
-        <folder>forms</folder>
     </files>
 </extension>

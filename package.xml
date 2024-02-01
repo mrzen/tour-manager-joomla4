@@ -12,6 +12,6 @@
         <file type="plugin" id="tour_manager_sync" group="system">plg_system_tour_manager_sync.zip</file>
         <file type="plugin" id="rezkit_geoip" group="system">plg_system_rezkit_geoip.zip</file>
         <file type="plugin" id="toursearch" group="system">plg_system_toursearch.zip</file>
-        <file type="plugin" id="tours_sitemap" group="system">plg_system_tours_sitemap.zip</file>
+        <file type="plugin" id="tours_sitemap" group="osmap">plg_osmap_sitemap.zip</file>
     </files>
 </extension>
