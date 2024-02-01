@@ -5,40 +5,12 @@
     use Alledia\OSMap\Sitemap\Collector;
     use Alledia\OSMap\Sitemap\Item;
     use Joomla\Registry\Registry;
-    use Joomla\CMS\Log\Log;
+    use Joomla\CMS\Factory;
+    use Joomla\Database\DatabaseInterface;
 
     class TourSiteMap extends Base
     {
-        const LIST_HOLIDAYS_QUERY = /** @lang GraphQL */
-		<<<'QUERY'
-		query syncHolidayList($cursor: String) {
-			holidays(after: $cursor, first: 100) {
-				pageInfo {
-					hasNextPage
-					endCursor
-				}
-				
-				edges {
-					node {
-						id
-						name
-						code
-					}
-				}
-			}	
-		}
-	QUERY;
-
-	private \Softonic\GraphQL\Client $client;
-
-	private \Joomla\CMS\Log\DelegatingPsrLogger $log;
-
-	public function __construct()
-	{
-		$this->client = Client::create();
-		$this->log    = Log::createDelegatedLogger();
-	}
-
+      
 	/**
 	 * Get a list of all holidays.
 	 *
@@ -47,21 +19,16 @@
 	 */
 	public function getHolidayList(): array
 	{
-		$response = $this->client->query(self::LIST_HOLIDAYS_QUERY);
+		/** @var DatabaseInterface $db */
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$q = $db->getQuery(true);
 
-		$data = $response->getData();
+		$q = $q->select('id', 'rezkitid', 'tourname', 'tourcode', 'alias')
+			->from('#__holidays')
+			->order('id');
 
-		$holidays = array_map(fn(array $x) => $x['node'], $data['holidays']['edges']);
-
-		while ($response->getData()['holidays']['pageInfo']['hasNextPage'])
-		{
-
-			$cursor   = $response->getData()['holidays']['pageInfo']['endCursor'];
-			$response = $this->client->query(self::LIST_HOLIDAYS_QUERY, ['cursor' => $cursor]);
-
-			$pg       = array_map(fn(array $x) => $x['node'], $data['holidays']['edges']);
-			$holidays = array_merge($holidays, $pg);
-		}
+		$db->setQuery($q);
+		$holidays = $db->loadObjectList('rezkitid');
 
 		return $holidays;
 	}
@@ -79,20 +46,16 @@
 
             var_dump($holidays);
 
-            // foreach($holidays as $holiday) {
-            //     $node = (object)array(
-            //         'id'         => $parent->id,
-            //         'name'       => 'This Node Title',
-            //         'uid'        => $parent->uid . '_' . 'UniqueNodeId',
-            //         'modified'   => '2018-02-28 12:00:00',
-            //         'browserNav' => $parent->browserNav,
-            //         'priority'   => .5,
-            //         'changefreq' => 'weekly',
-            //         'link'       => 'index.php?option=com_mycomponent'
-            //     );
+            foreach($holidays as $holiday) {
+                $node = (object)array(
+                    'id'         => $holiday->id,
+                    'name'       => $holiday->name,
+                    'uid'        => $holiday->rezkitid,
+                    'link'       => 'index.php?option=rk_tours&view=holiday&id=' . $holiday->id,
+                );
 
-            //     $collector->printNode($node);
-            // }
+                $collector->printNode($node);
+            }
             
         }
     }

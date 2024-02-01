@@ -8,9 +8,7 @@ use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 use Joomla\CMS\Console\Loader\WritableLoaderInterface;
 use Joomla\CMS\Http\HttpFactory;
-use RezKit\Tours\Plugins\GeoIP\Extension\GeoIP;
-use RezKit\Tours\Cli\UpdateGeoIPDatabaseCommand;
-use RezKit\Tours\GeoIP\DatabaseUpdater;
+use RezKit\Tours\Plugins\TourSiteMap\Extension\TourSiteMap;
 
 require_once JPATH_LIBRARIES . '/tour-manager/vendor/autoload.php';
 
