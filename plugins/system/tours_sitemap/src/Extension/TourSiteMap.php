@@ -10,28 +10,33 @@
 
     class TourSiteMap extends Base
     {
-      
-	/**
-	 * Get a list of all holidays.
-	 *
-	 * @return array List of all holidays
-	 * @since 1.0
-	 */
-	public function getHolidayList(): array
-	{
-		/** @var DatabaseInterface $db */
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$q = $db->getQuery(true);
+        
+        public function getComponentElement()
+        {
+            return 'com_rktours';
+        }
 
-		$q = $q->select('id', 'rezkitid', 'tourname', 'tourcode', 'alias')
-			->from('#__holidays')
-			->order('id');
+        /**
+         * Get a list of all holidays.
+         *
+         * @return array List of all holidays
+         * @since 1.0
+         */
+        public function getHolidayList(): array
+        {
+            /** @var DatabaseInterface $db */
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $q = $db->getQuery(true);
 
-		$db->setQuery($q);
-		$holidays = $db->loadObjectList('rezkitid');
+            $q = $q->select('id', 'rezkitid', 'tourname', 'tourcode', 'alias')
+                ->from('#__holidays')
+                ->order('id');
 
-		return $holidays;
-	}
+            $db->setQuery($q);
+            $holidays = $db->loadObjectList('rezkitid');
+
+            return $holidays;
+        }
 
         /**
          * @param Collector $collector
@@ -47,6 +52,7 @@
             var_dump($holidays);
 
             foreach($holidays as $holiday) {
+                $collector->changeLevel(1);
                 $node = (object)array(
                     'id'         => $holiday->id,
                     'name'       => $holiday->name,
@@ -55,6 +61,7 @@
                 );
 
                 $collector->printNode($node);
+                $collector->changeLevel(-1);
             }
             
         }
