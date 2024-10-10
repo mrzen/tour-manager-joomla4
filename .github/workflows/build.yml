@@ -70,3 +70,21 @@ jobs:
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
             plg_system_tours_sitemap.zip
+
+  upload_to_repo:
+    name: Upload to S3
+    runs-on: ubuntu-22.04
+    needs: [build]
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3
+        with:
+          role-to-assume: arn:aws:iam::205331266135:role/github-actions-tour-manager-joomla4-build-upload
+          role-session-name: github-action-run
+          aws-region: eu-west-1
+      - name: Download Build
+        uses: actions/download-artifact@v4
+        with:
+          name: tour-manager
+      - name: Upload to S3 as 'latest'
+        run: aws s3 cp tour-manager "s3://updates.mrzen.com/j4/tour-manager/latest.zip"        
