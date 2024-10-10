@@ -77,7 +77,7 @@ jobs:
     needs: [build]
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3
+        uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           role-to-assume: arn:aws:iam::205331266135:role/github-actions-tour-manager-joomla4-build-upload
           role-session-name: github-action-run
