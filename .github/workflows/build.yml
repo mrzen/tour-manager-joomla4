@@ -62,7 +62,7 @@ jobs:
 
       - name: "Package Component: RK Tours"
         working-directory: components/com_rktours
-        run: zip -qq -r ../../com_rktours.zip
+        run: zip -qq -r ../../com_rktours.zip .
 
       - name: "Package Plugin: Tour Site Map"
         working-directory: plugins/system/tours_sitemap
