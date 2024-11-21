@@ -82,6 +82,7 @@ jobs:
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v4
         with:
+          name: tour-manager.zip
           path: tour-manager.zip
 
   upload:
