@@ -48,10 +48,6 @@ jobs:
         working-directory: libraries/tour-manager
         run: zip -qq -r ../../lib_tour-manager.zip .
 
-      - name: "Package Plugin: Tour Manager Sync"
-        working-directory: plugins/system/tour_manager_sync
-        run: zip -qq -r ../../../plg_system_tour_manager_sync.zip .
-
       - name: "Package Plugin: GeoIP"
         working-directory: plugins/system/rezkit_geoip
         run: zip -qq -r ../../../plg_system_rezkit_geoip.zip .
@@ -75,7 +71,6 @@ jobs:
             package.xml
             com_rktours.zip
             lib_tour-manager.zip
-            plg_system_tour_manager_sync.zip
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
 
