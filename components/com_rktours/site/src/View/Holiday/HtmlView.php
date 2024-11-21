@@ -9,7 +9,8 @@ class HtmlView extends BaseHtmlView {
 
 	protected $item;
 
-	public function display($tpl = null) {
+	public function display($tpl = null): void
+	{
 
 		$client = Client::create();
 

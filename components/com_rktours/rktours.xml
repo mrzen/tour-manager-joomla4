@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="4.0" method="upgrade">
-    <name>RezKit Tour Manager</name>
+    <name>com_rktours</name>
     <creationDate>2024-11-21</creationDate>
     <author>RezKit Ltd</author>
     <version>0.1.0</version>
@@ -21,6 +21,7 @@
 
         <languages folder="admin/languages">
             <language tag="en-GB">en-GB/com_rktours.ini</language>
+            <language tag="en-GB">en-GB/com_rktours.sys.ini</language>
         </languages>
     </administration>
 </extension>
