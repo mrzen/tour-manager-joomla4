@@ -98,5 +98,5 @@ jobs:
 
       - name: Upload package
         run: |
-          aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-${{github.run_number}}.zip
-          aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-latest.zip
+          aws s3 cp ./tour-manager.zip s3://updates.mrzen.com/j4/tour-manager/tour-manager-${{github.run_number}}.zip
+          aws s3 cp ./tour-manager.zip s3://updates.mrzen.com/j4/tour-manager/tour-manager-latest.zip
