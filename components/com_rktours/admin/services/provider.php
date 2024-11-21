@@ -13,8 +13,8 @@ return new class implements ServiceProviderInterface
 {
 	public function register(Container $container):  void
 	{
-		$container->registerServiceProvider(new MVCFactory('RezKit\\Component\\Tours'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('RezKit\\Component\\Tours'));
+		$container->registerServiceProvider(new MVCFactory('RezKit\\Component\\RKTours'));
+		$container->registerServiceProvider(new ComponentDispatcherFactory('RezKit\\Component\\RKTours'));
 		$container->set(
 			ComponentInterface::class,
 			function (Container $container) {
