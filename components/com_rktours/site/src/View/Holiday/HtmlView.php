@@ -15,7 +15,7 @@ class HtmlView extends BaseHtmlView {
 		$client = Client::create();
 
 		$holiday = $client->query(<<<'GRAPHQL'
-			query findHoliday($slug: String!) {
+			query com_rktours_findHoliday($slug: String!) {
 				holiday(slug: $slug) {
 					id
 					published

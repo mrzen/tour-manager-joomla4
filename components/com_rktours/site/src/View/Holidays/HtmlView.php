@@ -3,9 +3,12 @@
 namespace RezKit\Component\RKTours\Site\View\Holidays;
 defined('_JEXEC') or die;
 
-use \Joomla\CMS\MVC\VIEW\HtmlView as BaseView;
+use \Joomla\CMS\MVC\View\HtmlView as BaseView;
 
 class HtmlView extends BaseView
 {
-
+	public function display($tpl = null): void
+	{
+		parent::display($tpl);
+	}
 }

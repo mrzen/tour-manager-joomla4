@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\Component\RKTours\Site\Services;
+namespace RezKit\Component\RKTours\Site\Service;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterView;
@@ -18,6 +18,7 @@ class Router extends RouterView {
 		$this->registerView($holidays);
 
 		$holiday =  new RouterViewConfiguration('holiday');
+		$holiday->setKey('slug')->setParent($holidays);
 		$this->registerView($holiday);
 
 		parent::__construct($app, $menu);

@@ -11,7 +11,7 @@ class DisplayController extends BaseController
 	{
 		$document = Factory::getApplication()->getDocument();
 		$viewName = $this->input->getCmd('view','holidays');
-		$viewFormat = $document->getViewFormat();
+		$viewFormat = $document->getType();
 		$view  = $this->getView($viewName, $viewFormat);
 		$view->document = $document;
 
