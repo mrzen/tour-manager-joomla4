@@ -5,7 +5,7 @@
     <author>RezKit Ltd</author>
     <version>0.1.0</version>
 
-    <namespace path="src">RezKit\Component\Tours</namespace>
+    <namespace path="src">RezKit\Component\RKTours</namespace>
 
     <files folder="site/">
         <folder>src</folder>

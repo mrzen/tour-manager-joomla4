@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\Component\Tours\Site\Controller;
+namespace RezKit\Component\RKTours\Site\Controller;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 

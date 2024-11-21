@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\Component\Tours\Site\Services;
+namespace RezKit\Component\RKTours\Site\Services;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\Router\RouterView;
