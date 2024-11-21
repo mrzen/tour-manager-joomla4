@@ -69,7 +69,7 @@ jobs:
         run: zip -qq -r ../../../plg_system_tours_sitemap.zip .
 
       - name: "Generate package payload"
-        run: +
+        run: >
             zip -qq 
             tour-manager.zip
             package.xml
