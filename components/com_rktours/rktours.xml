@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<extension type="component" version="5.0" method="upgrade">
-    <name>com_rktours</name>
+<extension type="component" version="4.0" method="upgrade">
+    <name>COM_RKTOURS</name>
     <creationDate>2024-11-21</creationDate>
-    <copyright>2024 RezKit Ltd</copyright>
     <author>RezKit Ltd</author>
-    <authorEmail>support@rezkit.app</authorEmail>
-    <authorUrl>https://rezkit.com</authorUrl>
-    <version>2.0.0</version>
-    <description>Integrates RezKit Tour Manager CMS with Joomla</description>
-    <namespace path="src">RezKit\TourManager\Joomla\</namespace>
-
-    <scriptfile>script.php</scriptfile>
+    <version>0.1.0</version>
+    <namespace path="src">RezKit\Tours\Joomla</namespace>
 
     <files folder="site">
-        <filename>index.html</filename>
+        <folder>src</folder>
     </files>
 
     <administration>
         <files folder="admin">
-            <filename>config.xml</filename>
+
         </files>
     </administration>
 </extension>

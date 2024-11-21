@@ -38,6 +38,7 @@
       <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/softonic/guzzle-oauth2-middleware" />
       <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/geoip2/geoip2" />
       <path value="$PROJECT_DIR$/libraries/tour-manager/vendor/maxmind-db/reader" />
+      <path value="$PROJECT_DIR$/../../clients/tat/j4" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
