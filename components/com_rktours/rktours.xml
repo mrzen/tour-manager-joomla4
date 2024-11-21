@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="4.0" method="upgrade">
-    <name>COM_RKTOURS</name>
+    <name>RezKit Tour Manager</name>
     <creationDate>2024-11-21</creationDate>
     <author>RezKit Ltd</author>
     <version>0.1.0</version>
@@ -12,7 +12,8 @@
 
     <administration>
         <files folder="admin">
-
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
         </files>
     </administration>
 </extension>
