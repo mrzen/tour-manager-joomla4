@@ -9,7 +9,6 @@
 
     <files folder="site/">
         <folder>src</folder>
-        <folder>services</folder>
         <folder>tmpl</folder>
     </files>
 
