@@ -1,12 +1,17 @@
 name: Build & Release Package
 
 on:
+  workflow-dispatch: {}
   push:
     branches:
       - master
   release:
     types:
       - released
+
+permissions:
+  id-token: write
+  contents: write
 
 jobs:
   build:
@@ -16,6 +21,7 @@ jobs:
       - id: checkout
         name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
@@ -28,7 +34,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -55,6 +61,10 @@ jobs:
         working-directory: plugins/system/toursearch
         run: zip -qq -r ../../../plg_system_toursearch.zip .
 
+      - name: "Package Component: RK Tours"
+        working-directory: components/com_rktours
+        run: zip -qq -r ../../com_rktours.zip
+
       - name: "Package Plugin: Tour Site Map"
         working-directory: plugins/system/tours_sitemap
         run: zip -qq -r ../../../plg_system_tours_sitemap.zip .
@@ -65,29 +75,29 @@ jobs:
           name: tour-manager
           path: |
             package.xml
+            com_rktours.zip
             lib_tour-manager.zip
             plg_system_tour_manager_sync.zip
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
-            plg_system_tours_sitemap.zip
 
-  upload_to_repo:
-    name: Upload to S3
-    runs-on: ubuntu-22.04
+  upload:
+    runs-on: ubuntu-24.04
     needs: [build]
-    permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
     steps:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.2
-        with:
-          role-to-assume: arn:aws:iam::205331266135:role/github-actions-tour-manager-joomla4-build-upload
-          role-session-name: github-action-run
-          aws-region: eu-west-1
-      - name: Download Build
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: tour-manager
-      - name: Upload to S3 as 'latest'
-        run: aws s3 cp tour-manager "s3://updates.mrzen.com/j4/tour-manager/latest.zip"        
+
+      - name: Authenticate with AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-session-name: GitHubActionRun-${{github.run_number}}
+          aws-region: eu-west-1
+          role-to-assume: arn:aws:iam::205331266135:role/gha.uploadJoomlaPackages
+
+      - name: Upload package
+        run: >
+          aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-${{github.run_number}}.zip
+          aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-latest.zip

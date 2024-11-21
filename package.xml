@@ -5,13 +5,14 @@
     <author>RezKit Ltd.</author>
     <packagename>tour-manager</packagename>
     <creationDate>2023-06-21</creationDate>
-    <version>0.1.0</version>
+    <version>2.0.0</version>
 
     <files>
         <file type="library" id="tour-manager">lib_tour-manager.zip</file>
         <file type="plugin" id="tour_manager_sync" group="system">plg_system_tour_manager_sync.zip</file>
         <file type="plugin" id="rezkit_geoip" group="system">plg_system_rezkit_geoip.zip</file>
         <file type="plugin" id="toursearch" group="system">plg_system_toursearch.zip</file>
+        <file type="component" id="rktours">com_rktours.zip</file>
         <file type="plugin" id="tours_sitemap" group="osmap">plg_osmap_sitemap.zip</file>
     </files>
 </extension>

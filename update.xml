@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<updates>
+    <update>
+        <name>Tour Manager</name>
+        <element>tour-manager</element>
+        <type>package</type>
+        <verison>__VERSION__</verison>
+        <downloads>
+            <downloadurl type="full" format="zip">
+                https://updates.mrzen.com/j4/tour-manager/tour-manger-__VERSION__.zip
+            </downloadurl>
+        </downloads>
+    </update>
+</updates>
