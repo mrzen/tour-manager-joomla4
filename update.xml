@@ -5,10 +5,12 @@
         <element>tour-manager</element>
         <type>package</type>
         <verison>__VERSION__</verison>
+        <description>Tour Manager integration for Joomla</description>
         <downloads>
             <downloadurl type="full" format="zip">
                 https://updates.mrzen.com/j4/tour-manager/tour-manger-__VERSION__.zip
             </downloadurl>
         </downloads>
+        <targetplatform name="joomla" version="5.*" />
     </update>
 </updates>

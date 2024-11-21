@@ -14,4 +14,8 @@
         <file type="component" id="rktours">com_rktours.zip</file>
         <file type="plugin" id="tours_sitemap" group="osmap">plg_osmap_sitemap.zip</file>
     </files>
+
+    <updateservers>
+        <server type="extension" name="RezKit Tour Manager">https://updates.mrzen.com/j4/tour-manager/update.xml</server>
+    </updateservers>
 </extension>

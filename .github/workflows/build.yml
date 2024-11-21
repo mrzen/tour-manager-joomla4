@@ -84,6 +84,12 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [build]
     steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '1'
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
@@ -96,7 +102,11 @@ jobs:
           aws-region: eu-west-1
           role-to-assume: arn:aws:iam::205331266135:role/gha.uploadJoomlaPackages
 
+      - name: Generate update file
+        run: sed -i -e 's/__VERSION__/${{github.run_number}}/g' update.xml
+
       - name: Upload package
         run: |
           aws s3 cp ./tour-manager.zip s3://updates.mrzen.com/j4/tour-manager/tour-manager-${{github.run_number}}.zip
           aws s3 cp ./tour-manager.zip s3://updates.mrzen.com/j4/tour-manager/tour-manager-latest.zip
+          aws s3 cp ./update.xml s3://updates.mrzen.com/j4/tour-manager/update.xml
