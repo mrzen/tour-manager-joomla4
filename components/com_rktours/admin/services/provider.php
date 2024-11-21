@@ -10,6 +10,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use RezKit\Component\RKTours\Site\Extension\RezKitComponent;
+use RezKit\Tours\Client;
 
 return new class implements ServiceProviderInterface
 {
@@ -29,5 +30,14 @@ return new class implements ServiceProviderInterface
 				return $component;
 			}
 		);
+
+		$container->set(
+			Client::class,
+			function (Container $container) {
+				return Client::create();
+			}
+		);
+
+		$container->alias('rezkit.tours.client', Client::class);
 	}
 };
