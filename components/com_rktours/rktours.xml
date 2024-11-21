@@ -4,14 +4,17 @@
     <creationDate>2024-11-21</creationDate>
     <author>RezKit Ltd</author>
     <version>0.1.0</version>
-    <namespace path="src">RezKit\Tours\Joomla</namespace>
 
-    <files folder="site">
+    <namespace path="src">RezKit\Component\Tours</namespace>
+
+    <files folder="site/">
         <folder>src</folder>
+        <folder>services</folder>
+        <folder>tmpl</folder>
     </files>
 
     <administration>
-        <files folder="admin">
+        <files folder="admin/">
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <folder>services</folder>

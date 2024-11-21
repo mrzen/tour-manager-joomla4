@@ -1,6 +1,6 @@
 <?php
 
-namespace RezKit\TourManager\Joomla\Site\View\Holidays;
+namespace RezKit\Component\Tours\Site\View\Holidays;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use RezKit\Tours\Client;

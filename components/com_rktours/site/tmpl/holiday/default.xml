@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<metadata>
+    <layout title="Holiday">
+        <message><![CDATA[Single Holiday Page View]]></message>
+    </layout>
+
+    <fields name="request">
+        <fieldset name="request">
+            <field name="holiday_id"
+                   type="text"
+                   label="Holiday ID" />
+        </fieldset>
+    </fields>
+</metadata>
