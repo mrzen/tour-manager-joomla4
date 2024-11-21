@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-    <fieldset label="COM_RKTOURS_HEADLESS" name="rktours_headless">
-        <field name="apiendpoint" filter="safehtml" type="text" label="COM_RKTOURS_HEADLESS_FORM_LBL_APIENDPOINT" description="COM_RKTOURS_HEADLESS_FORM_DESC_APIENDPOINT" hint="COM_RKTOURS_HEADLESS_FORM_LBL_APIENDPOINT"/>
-<field name="apikey" filter="safehtml" type="text" label="COM_RKTOURS_HEADLESS_FORM_LBL_APIKEY" description="COM_RKTOURS_HEADLESS_FORM_DESC_APIKEY" hint="COM_RKTOURS_HEADLESS_FORM_LBL_APIKEY"/>
+    <fieldset label="COM_RKTOURS" name="config">
+        <field name="apiendpoint"
+               filter="safehtml"
+               type="text"
+               label="API Endpoint"
+               description="API Endpoint"
+               hint="Ends with /graphql"
+        />
 
+        <field name="apikey" filter="safehtml" type="text" label="API Key" description="Tour Manager  API Key" />
+        <field name="cache_ttl"
+               type="number"
+               min="0"
+               max="1440"
+               label="Cache TTL"
+               hint="Cache TTL (in minutes)"
+        />
     </fieldset>
 
     <fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
@@ -24,8 +37,6 @@
         </field>
 
         <field name="history_limit" type="text" filter="integer" label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL" description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC" default="5"/>
-
-      
 
         <field
           name="sef_ids"

@@ -15,5 +15,9 @@
             <filename>access.xml</filename>
             <filename>config.xml</filename>
         </files>
+
+        <languages folder="admin/languages">
+            <language tag="en-GB">en-GB/com_rktours.ini</language>
+        </languages>
     </administration>
 </extension>
