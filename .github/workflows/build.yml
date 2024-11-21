@@ -62,7 +62,7 @@ jobs:
 
       - name: "Package Plugin: Tour Site Map"
         working-directory: plugins/system/tours_sitemap
-        run: zip -qq -r ../../../plg_system_tours_sitemap.zip .
+        run: zip -qq -r ../../../plg_osmap_tours_sitemap.zip .
 
       - name: "Generate package payload"
         run: >
@@ -73,6 +73,7 @@ jobs:
             lib_tour-manager.zip
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
+            plg_osmap_tours_sitemap.zip
 
       - name: Upload Package Artifact
         uses: actions/upload-artifact@v4
