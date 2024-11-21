@@ -97,6 +97,6 @@ jobs:
           role-to-assume: arn:aws:iam::205331266135:role/gha.uploadJoomlaPackages
 
       - name: Upload package
-        run: >
+        run: |
           aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-${{github.run_number}}.zip
           aws s3 cp ./tour-manager s3://updates.mrzen.com/j4/tour-manager/tour-manager-latest.zip
