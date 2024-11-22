@@ -14,6 +14,7 @@ class DisplayController extends BaseController
 		$viewFormat = $document->getType();
 		$view  = $this->getView($viewName, $viewFormat);
 		$view->document = $document;
+		$view->slug = $this->input->getString('slug');
 
 		$view->display();
 	}

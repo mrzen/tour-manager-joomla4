@@ -9,13 +9,16 @@ use RezKit\Tours\Client;
 
 class HtmlView extends BaseHtmlView {
 
-	protected $item;
+	public string $slug;
+	protected $holiday;
+
+	protected $client;
 
 	public function display($tpl = null): void
 	{
-		$client = Client::create();
+		$this->client = Client::create();
 
-		$response = $client->query(<<<'GRAPHQL'
+		$response = $this->client->query(<<<'GRAPHQL'
 			query com_rktours_findHoliday($slug: String!) {
 				holiday(slug: $slug) {
 					id
@@ -23,20 +26,24 @@ class HtmlView extends BaseHtmlView {
 					name
 					published
 					search_public
+					seo {
+						meta_title
+						meta_description
+					}
 				}
 			}
-		GRAPHQL
-		);
+		GRAPHQL,
+		['slug' => $this->slug]);
 
 		if ($response->hasErrors()) {
 			// Unable to load holiday for some unknown reason.
-			throw new Error('Unable to retrieve holiday details from RezKit Tour Manager');
+			throw new Error('Unable to retrieve holiday details from RezKit Tour Manager', 502);
 		}
 
 		$holiday = $response->getData()['holiday'];
 
 		if ($holiday === null) {
-			throw new ResourceNotFound("No holiday found for given slug");
+			throw new ResourceNotFound("No holiday found for the slug \"$this->slug\".", 404);
 		}
 
 		$this->item = $holiday;
