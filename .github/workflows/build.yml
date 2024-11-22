@@ -52,6 +52,10 @@ jobs:
         working-directory: plugins/system/rezkit_geoip
         run: zip -qq -r ../../../plg_system_rezkit_geoip.zip .
 
+      - name: "Package Plugin: RK Tours"
+        working-directory: plugins/system/rktours
+        run: zip -qq -r ../../../plg_system_rktours.zip .
+
       - name: "Package Plugin: Tour Search"
         working-directory: plugins/system/toursearch
         run: zip -qq -r ../../../plg_system_toursearch.zip .
@@ -71,6 +75,7 @@ jobs:
             package.xml
             com_rktours.zip
             lib_tour-manager.zip
+            plg_system_rktours.zip
             plg_system_rezkit_geoip.zip
             plg_system_toursearch.zip
             plg_osmap_tours_sitemap.zip
