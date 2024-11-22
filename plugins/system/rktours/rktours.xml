@@ -15,5 +15,6 @@
     <namespace path="src">RezKit\Plugins\System\RKTours</namespace>
     <files>
         <folder plugin="rktours">services</folder>
+        <folder>src</folder>
     </files>
 </extension>
