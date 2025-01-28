@@ -5,7 +5,7 @@
     <author>RezKit Ltd.</author>
     <packagename>tour-manager</packagename>
     <creationDate>2023-06-21</creationDate>
-    <version>2.0.0</version>
+    <version>2.0.__VERSION__</version>
 
     <files>
         <file type="library" id="tour-manager">lib_tour-manager.zip</file>

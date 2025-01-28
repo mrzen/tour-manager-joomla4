@@ -108,8 +108,10 @@ jobs:
           aws-region: eu-west-1
           role-to-assume: arn:aws:iam::205331266135:role/gha.uploadJoomlaPackages
 
-      - name: Generate update file
-        run: sed -i -e 's/__VERSION__/${{github.run_number}}/g' update.xml
+      - name: Generate update/package file
+        run: |
+          sed -i -e 's/__VERSION__/${{github.run_number}}/g' update.xml
+          sed -i -e 's/__VERSION__/${{github.run_number}}/g' package.xml
 
       - name: Upload package
         run: |

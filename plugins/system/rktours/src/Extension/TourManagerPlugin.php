@@ -25,7 +25,7 @@ class TourManagerPlugin extends CMSPlugin implements SubscriberInterface
 
 		$container->share(
 			Client::class,
-			static function (ContainerInterface $container) {
+			static function (ContainerInterface $_) {
 				return Client::create();
 			}
 		);
