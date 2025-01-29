@@ -15,11 +15,11 @@ class TourManagerPlugin extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents(): array
 	{
 		return [
-			ApplicationEvents::BEFORE_EXECUTE => 'configureServices'
+			'onAfterRoute' => 'configureServices',
 		];
 	}
 
-	public function configureServices(): void
+	public function configureServices(): voi
 	{
 		$container = Factory::getContainer();
 
