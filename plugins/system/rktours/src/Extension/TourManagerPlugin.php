@@ -19,7 +19,7 @@ class TourManagerPlugin extends CMSPlugin implements SubscriberInterface
 		];
 	}
 
-	public function configureServices(): voi
+	public function configureServices(): void
 	{
 		$container = Factory::getContainer();
 
