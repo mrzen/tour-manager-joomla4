@@ -6,7 +6,7 @@
     <copyright>2023 Mr Zen Ltd</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>support@mrzen.com</authorEmail>
-    <authorUrl>http://mrzen.com</authorUrl>
+    <authorUrl>https://mrzen.com</authorUrl>
     <version>0.1.0</version>
     <description>PLG_SYSTEM_TOURSEARCH_XML_DESCRIPTION</description>
     <namespace path="src">RezKit\Tours\Plugins\Search</namespace>
