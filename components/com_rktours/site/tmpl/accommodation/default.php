@@ -1,0 +1,1 @@
+<p>Accommodation View</p>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<metadata>
+    <layout title="Accommodation">
+        <message><![CDATA[Single Accommodation Page View]]></message>
+    </layout>
+
+    <fields name="request">
+        <fieldset name="request">
+            <field name="accommodation_id"
+                   type="text"
+                   label="Accommodation ID" />
+        </fieldset>
+    </fields>
+</metadata>

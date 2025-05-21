@@ -7,10 +7,10 @@ use Joomla\CMS\MVC\Controller\BaseController;
 
 class DisplayController extends BaseController
 {
-	public function display($cachable = false, $urlparams = []): void
+	public function display($cachable = false, $urlparams = [], $type): void
 	{
 		$document = Factory::getApplication()->getDocument();
-		$viewName = $this->input->getCmd('view','holidays');
+		$viewName = $this->input->getCmd('view',$type);
 		$viewFormat = $document->getType();
 		$view  = $this->getView($viewName, $viewFormat);
 		$view->document = $document;
