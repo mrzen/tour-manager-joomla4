@@ -8,6 +8,8 @@ class AccommodationController extends BaseController
 {
 	public function display($cachable = false, $urlparams = [])
 	{
-		return parent::display($cachable, $urlparams, 'accommodations');
+		$this->input->set('type', 'accommodations');
+
+		return parent::display($cachable, $urlparams);
 	}
 }
