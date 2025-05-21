@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - support/HF24-21-updated-integration
   release:
     types:
       - released
