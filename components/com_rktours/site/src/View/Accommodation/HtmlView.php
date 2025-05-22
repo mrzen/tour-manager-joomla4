@@ -22,14 +22,8 @@ class HtmlView extends BaseHtmlView {
 			query com_rktours_findAccommodation($slug: String!) {
 				accommodation(slug: $slug) {
 					id
-					code
 					name
 					published
-					search_public
-					seo {
-						meta_title
-						meta_description
-					}
 				}
 			}
 		GRAPHQL,
