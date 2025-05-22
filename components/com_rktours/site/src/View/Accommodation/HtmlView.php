@@ -22,16 +22,17 @@ class HtmlView extends BaseHtmlView {
 			query com_rktours_findAccommodation($slug: String!) {
 				accommodation(slug: $slug) {
 					id
-					name
-					published
 				}
 			}
 		GRAPHQL,
 		['slug' => $this->slug]);
 
 		if ($response->hasErrors()) {
-			// Unable to load accommodation for some unknown reason.
-			throw new Error('Unable to retrieve accommodation details from RezKit Tour Manager', 502);
+			$errors = $response->getErrors();
+			error_log('GraphQL Errors: ' . json_encode($errors));
+
+			$errorMessage = 'Unable to retrieve accommodation details from RezKit Tour Manager.  GraphQL Errors: ' . json_encode($errors);
+			throw new Error($errorMessage, 502);
 		}
 
 		$accommodation = $response->getData()['accommodation'];
