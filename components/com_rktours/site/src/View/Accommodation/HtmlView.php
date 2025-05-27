@@ -19,7 +19,7 @@ class HtmlView extends BaseHtmlView {
 		$this->client = Client::create();
 
 		$response = $this->client->query(<<<'GRAPHQL'
-			query com_rktours_findAccommodation($id: String!) {
+			query com_rktours_findAccommodation($id: ID!) {
 				accommodation(id: $id) {
 					id
 				}
