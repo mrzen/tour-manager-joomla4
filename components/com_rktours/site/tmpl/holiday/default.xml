@@ -9,6 +9,9 @@
             <field name="holiday_id"
                    type="text"
                    label="Holiday ID" />
+            <field name="slug"
+                   type="text"
+                   label="Slug" />
         </fieldset>
     </fields>
 </metadata>

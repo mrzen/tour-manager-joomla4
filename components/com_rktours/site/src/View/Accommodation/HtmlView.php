@@ -9,7 +9,7 @@ use RezKit\Tours\Client;
 
 class HtmlView extends BaseHtmlView {
 
-	public string $slug;
+	public string $id;
 	protected $accommodation;
 
 	protected $client;
@@ -19,13 +19,13 @@ class HtmlView extends BaseHtmlView {
 		$this->client = Client::create();
 
 		$response = $this->client->query(<<<'GRAPHQL'
-			query com_rktours_findAccommodation($slug: String!) {
-				accommodation(slug: $slug) {
+			query com_rktours_findAccommodation($id: String!) {
+				accommodation(id: $id) {
 					id
 				}
 			}
 		GRAPHQL,
-		['slug' => $this->slug]);
+		['id' => $this->id]);
 
 		if ($response->hasErrors()) {
 			$errors = $response->getErrors();
@@ -38,7 +38,7 @@ class HtmlView extends BaseHtmlView {
 		$accommodation = $response->getData()['accommodation'];
 
 		if ($accommodation === null) {
-			throw new ResourceNotFound("No accommodation found for the slug \"$this->slug\".", 404);
+			throw new ResourceNotFound("No accommodation found for the id \"$this->id\".", 404);
 		}
 
 		$this->item = $accommodation;

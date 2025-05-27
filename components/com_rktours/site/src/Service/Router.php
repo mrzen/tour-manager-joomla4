@@ -25,7 +25,7 @@ class Router extends RouterView {
 		$this->registerView($accommodations);
 
 		$accommodation = new RouterViewConfiguration('accommodation');
-		$accommodation->setKey('slug')->setParent($accommodations);
+		$accommodation->setKey('id')->setParent($accommodations);
 		$this->registerView($accommodation);
 
 		parent::__construct($app, $menu);
@@ -41,9 +41,9 @@ class Router extends RouterView {
 		return $slug;
 	}
 
-	public function getAccommodationId($slug, &$query): string
+	public function getAccommodationId($id, &$query): string
 	{
-		$query['slug']  = $slug;
-		return $slug;
+		$query['id']  = $id;
+		return $id;
 	}
 }

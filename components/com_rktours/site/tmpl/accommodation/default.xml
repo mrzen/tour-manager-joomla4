@@ -6,7 +6,7 @@
 
     <fields name="request">
         <fieldset name="request">
-            <field name="accommodation_id"
+            <field name="id"
                    type="text"
                    label="Accommodation ID" />
         </fieldset>
