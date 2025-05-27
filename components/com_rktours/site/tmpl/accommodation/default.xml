@@ -9,6 +9,9 @@
             <field name="id"
                    type="text"
                    label="Accommodation ID" />
+            <field name="slug"
+                   type="text"
+                   label="Slug" />
         </fieldset>
     </fields>
 </metadata>

@@ -6,7 +6,7 @@
 
     <fields name="request">
         <fieldset name="request">
-            <field name="holiday_id"
+            <field name="id"
                    type="text"
                    label="Holiday ID" />
             <field name="slug"
