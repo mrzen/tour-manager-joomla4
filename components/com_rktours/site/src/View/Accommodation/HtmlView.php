@@ -22,6 +22,7 @@ class HtmlView extends BaseHtmlView {
 			query com_rktours_findAccommodation($id: ID!) {
 				accommodation(id: $id) {
 					id
+					name
 				}
 			}
 		GRAPHQL,
