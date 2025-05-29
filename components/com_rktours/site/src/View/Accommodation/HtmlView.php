@@ -23,7 +23,6 @@ class HtmlView extends BaseHtmlView {
 				accommodation(slug: $slug) {
 					id
 					name
-					published
 				}
 			}
 		GRAPHQL,
