@@ -21,11 +21,8 @@ class Router extends RouterView {
 		$holiday->setKey('slug')->setParent($holidays);
 		$this->registerView($holiday);
 
-		$accommodations = new RouterViewConfiguration('accommodations');
-		$this->registerView($accommodations);
-
 		$accommodation = new RouterViewConfiguration('accommodation');
-		$accommodation->setKey('id')->setParent($accommodations);
+		$accommodation->setKey('slug');
 		$this->registerView($accommodation);
 
 		parent::__construct($app, $menu);
@@ -41,9 +38,9 @@ class Router extends RouterView {
 		return $slug;
 	}
 
-	public function getAccommodationId($id, &$query): string
+	public function getAccommodationId($slug, &$query): string
 	{
-		$query['id']  = $id;
-		return $id;
+		$query['slug']  = $slug;
+		return $slug;
 	}
 }
