@@ -4,6 +4,10 @@
         <message><![CDATA[Single Holiday Page View]]></message>
     </layout>
 
+    <layout title="Trip Note" file="tripnote">
+        <message><![CDATA[Layout used for generating PDF trip notes]]></message>
+    </layout>
+
     <fields name="request">
         <fieldset name="request">
             <field name="holiday_id"
