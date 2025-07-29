@@ -18,6 +18,8 @@ class DisplayController extends BaseController
 		$view->slug = $this->input->getString('slug');
 		$view->id = $this->input->getString('id');
 
+		$view->setLayout($this->input->getCmd('layout', 'default'));
+
 		$view->display();
 	}
 }

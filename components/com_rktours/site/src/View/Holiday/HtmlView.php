@@ -48,6 +48,11 @@ class HtmlView extends BaseHtmlView {
 
 		$this->item = $holiday;
 
+		if ($this->getLayout() === 'tripnote') {
+			$html = $holiday;
+			$source = $holiday;
+		}
+
 		parent::display($tpl);
 	}
 }
