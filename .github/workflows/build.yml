@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature/accommodation-routing
   release:
     types:
       - released
