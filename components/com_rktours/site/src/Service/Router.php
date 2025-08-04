@@ -31,16 +31,4 @@ class Router extends RouterView {
 		$this->attachRule(new StandardRules($this));
 		$this->attachRule(new NomenuRules($this));
 	}
-
-	public function getHolidayId($slug, &$query): string
-	{
-		$query['slug']  = $slug;
-		return $slug;
-	}
-
-	public function getAccommodationId($slug, &$query): string
-	{
-		$query['slug']  = $slug;
-		return $slug;
-	}
 }
