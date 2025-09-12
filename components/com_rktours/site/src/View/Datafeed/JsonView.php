@@ -8,31 +8,29 @@ use Joomla\CMS\MVC\View\JsonView as BaseJsonView;
 
 class JsonView extends BaseJsonView
 {
-	protected $data;
-
 	public function display($tpl = null): void
 	{
 		// Determine the template and query file
 		$app      = Factory::getApplication();
 		$template = $app->getTemplate();
-		$queries  = JPATH_SITE . '/templates/' . $template . '/queries/holidays_query.php';
+		$queries  = JPATH_SITE . '/templates/' . $template . '/queries/data_feed_query.php';
 
-		// Load holiday data
-		$holidaysData = [];
+		// Load feed data
+		$dataFeed = [];
 		if (file_exists($queries)) {
-			$holidaysData = include $queries;
+			$dataFeed = include $queries;
 		}
 
 		// Ensure it’s an array
-		if (!is_array($holidaysData)) {
-			$holidaysData = [];
+		if (!is_array($dataFeed)) {
+			$dataFeed = [];
 		}
 
 		// Prepare JSON response
 		$response = [
 			'status' => 'ok',
-			'count'  => count($holidaysData),
-			'items'  => $holidaysData
+			'count'  => count($dataFeed),
+			'items'  => $dataFeed
 		];
 
 		header('Content-Type: application/json; charset=utf-8');
