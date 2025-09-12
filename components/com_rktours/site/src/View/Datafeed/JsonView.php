@@ -11,6 +11,9 @@ class JsonView extends BaseJsonView
 
 	public function display($tpl = null): void
 	{
+		// Ensure document type is JSON
+		$this->document->setMimeEncoding('application/json');
+
 		$this->data = [
 			'status' => 'ok',
 			'count' => 2,
