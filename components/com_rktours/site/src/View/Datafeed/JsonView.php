@@ -12,13 +12,16 @@ class JsonView extends BaseJsonView
 
 	public function display($tpl = null): void
 	{
-		$app      = \Joomla\CMS\Factory::getApplication();
+		$app      = Factory::getApplication();
 		$template = $app->getTemplate();
-		$queries = JPATH_SITE . '/templates/' . $app->getTemplate() . '/queries/holidays_query.php';
+		$queries  = JPATH_SITE . '/templates/' . $template . '/queries/holidays_query.php';
 
+		$holidaysData = [];
 		if (file_exists($queries)) {
 			$holidaysData = include $queries;
-		} else {
+		}
+
+		if (!is_array($holidaysData)) {
 			$holidaysData = [];
 		}
 
@@ -30,5 +33,4 @@ class JsonView extends BaseJsonView
 
 		parent::display();
 	}
-
 }
