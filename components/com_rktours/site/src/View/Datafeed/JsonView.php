@@ -14,22 +14,19 @@ class JsonView extends BaseJsonView
 	{
 		$app      = \Joomla\CMS\Factory::getApplication();
 		$template = $app->getTemplate();
-		$queries  = JPATH_SITE . '/templates/' . $template . '/queries/holidays_query.php';
+		$queries = JPATH_SITE . '/templates/' . $app->getTemplate() . '/queries/holidays_query.php';
 
 		if (file_exists($queries)) {
 			$holidaysData = include $queries;
-
-			$this->data = [
-				'status' => 'ok',
-				'count'  => count($holidaysData),
-				'items'  => $holidaysData,
-			];
 		} else {
-			$this->data = [
-				'status'  => 'error',
-				'message' => 'Query file not found: ' . $queries,
-			];
+			$holidaysData = [];
 		}
+
+		$this->data = [
+			'status' => 'ok',
+			'count'  => count($holidaysData),
+			'items'  => $holidaysData,
+		];
 
 		parent::display();
 	}
