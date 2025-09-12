@@ -13,21 +13,18 @@ class DisplayController extends BaseController
 		$document   = $app->getDocument();
 		$viewFormat = $document->getType();
 
-		var_dump($viewFormat);
-		exit;
+		$type       = $this->input->getCmd('type', 'holidays');
+		$viewName   = $this->input->getCmd('view', $type);
 
-		//$type       = $this->input->getCmd('type', 'holidays');
-		//$viewName   = $this->input->getCmd('view', $type);
+		$view = $this->getView($viewName, $viewFormat);
+		$view->document = $document;
 
-		//$view = $this->getView($viewName, $viewFormat);
-		//$view->document = $document;
+		if ($viewFormat === 'html') {
+			$view->slug   = $this->input->getString('slug');
+			$view->id     = $this->input->getString('id');
+			$view->setLayout($this->input->getCmd('layout', 'default'));
+		}
 
-		//if ($viewFormat === 'html') {
-		//	$view->slug   = $this->input->getString('slug');
-		//	$view->id     = $this->input->getString('id');
-		//	$view->setLayout($this->input->getCmd('layout', 'default'));
-		//}
-
-		//$view->display();
+		$view->display();
 	}
 }
