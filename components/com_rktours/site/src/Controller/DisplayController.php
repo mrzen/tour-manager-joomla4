@@ -9,17 +9,21 @@ class DisplayController extends BaseController
 {
 	public function display($cachable = false, $urlparams = []): void
 	{
-		$document = Factory::getApplication()->getDocument();
-		$type = $this->input->getCmd('type', 'holidays');
-		$viewName = $this->input->getCmd('view',$type);
+		$document   = Factory::getApplication()->getDocument();
+		$type       = $this->input->getCmd('type', 'holidays');
+		$viewName   = $this->input->getCmd('view', $type);
 		$viewFormat = $document->getType();
+
 		$view  = $this->getView($viewName, $viewFormat);
 		$view->document = $document;
 		$view->slug = $this->input->getString('slug');
-		$view->id = $this->input->getString('id');
+		$view->id   = $this->input->getString('id');
 
-		$view->setLayout($this->input->getCmd('layout', 'default'));
+		if ($viewFormat === 'html') {
+			$view->setLayout($this->input->getCmd('layout', 'default'));
+		}
 
 		$view->display();
 	}
+
 }
