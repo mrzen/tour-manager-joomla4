@@ -11,18 +11,18 @@ class JsonView extends BaseJsonView
 
 	public function display($tpl = null): void
 	{
-		// Ensure document type is JSON
-		$this->document->setMimeEncoding('application/json');
 
-		$this->data = [
+		header('Content-Type: application/json; charset=utf-8');
+
+		echo json_encode([
 			'status' => 'ok',
 			'count' => 2,
 			'items' => [
 				['id' => 1, 'slug' => 'holiday-a', 'name' => 'Holiday A'],
 				['id' => 2, 'slug' => 'holiday-b', 'name' => 'Holiday B']
 			]
-		];
+		], JSON_PRETTY_PRINT);
 
-		parent::display();
+		exit;
 	}
 }
