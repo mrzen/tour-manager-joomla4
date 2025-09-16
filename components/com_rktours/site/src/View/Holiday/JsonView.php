@@ -1,5 +1,6 @@
 <?php
-namespace RezKit\Component\RKTours\Site\View\Datafeed;
+
+namespace RezKit\Component\RKTours\Site\View\Holiday;
 
 \defined('_JEXEC') or die;
 
@@ -9,10 +10,13 @@ use Joomla\CMS\MVC\View\JsonView as BaseJsonView;
 
 class JsonView extends BaseJsonView
 {
+	protected $holiday;
 	public function display($tpl = null): void
 	{
 		$app   = Factory::getApplication();
 		$input = $app->input;
+		$id    = $input->getString('holiday_id');
+		$slug  = $input->getString('slug');
 
 		// Get expected API key from component params
 		$params        = ComponentHelper::getParams('com_rktours');
@@ -32,26 +36,26 @@ class JsonView extends BaseJsonView
 			$app->close();
 		}
 
-		// Determine the template and query file
 		$template = $app->getTemplate();
-		$queries  = JPATH_SITE . '/templates/' . $template . '/queries/data_feed_query.php';
+		$queries = JPATH_SITE . '/templates/' . $template . '/queries/holiday_query.php';
+		$this->item = ['id' => $id];
 
-		// Load feed data
-		$dataFeed = [];
 		if (file_exists($queries)) {
-			$dataFeed = include $queries;
-		}
-
-		// Ensure it’s an array
-		if (!is_array($dataFeed)) {
-			$dataFeed = [];
+			include $queries;
 		}
 
 		// Prepare JSON response
 		$response = [
 			'status' => 'ok',
-			'count'  => count($dataFeed),
-			'items'  => $dataFeed
+			// 'this'  => $this,
+			'item' => $this->holidayData['holiday'] ?? [],
+			//'debug' => [
+			//	'id' => $id,
+			//	'template' => $template,
+			//	'queries_path' => $queries,
+			//	'file_exists' => file_exists($queries),
+			//	'raw_data' => $this->holidayData ?? []
+			//]
 		];
 
 		header('Content-Type: application/json; charset=utf-8');
