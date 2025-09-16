@@ -49,13 +49,6 @@ class JsonView extends BaseJsonView
 			'status' => 'ok',
 			// 'this'  => $this,
 			'item' => $this->holidayData['holiday'] ?? [],
-			//'debug' => [
-			//	'id' => $id,
-			//	'template' => $template,
-			//	'queries_path' => $queries,
-			//	'file_exists' => file_exists($queries),
-			//	'raw_data' => $this->holidayData ?? []
-			//]
 		];
 
 		header('Content-Type: application/json; charset=utf-8');
