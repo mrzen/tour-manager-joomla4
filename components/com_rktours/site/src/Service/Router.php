@@ -25,6 +25,10 @@ class Router extends RouterView {
 		$accommodation->setKey('slug');
 		$this->registerView($accommodation);
 
+		$dataFeed = new RouterViewConfiguration('datafeed');
+		$dataFeed->setKey(null);
+		$this->registerView($dataFeed);
+
 		parent::__construct($app, $menu);
 
 		$this->attachRule(new MenuRules($this));

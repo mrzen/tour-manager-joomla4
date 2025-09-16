@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - bug/NT24-24-router-issue
+      - feature/data-feed-view
   release:
     types:
       - released
