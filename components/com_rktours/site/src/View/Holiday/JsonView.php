@@ -37,7 +37,7 @@ class JsonView extends BaseJsonView
 		}
 
 		$template = $app->getTemplate();
-		$queries = JPATH_SITE . '/templates/' . $template . '/queries/holiday_query.php';
+		$queries = JPATH_SITE . '/templates/' . $template . '/queries/holiday_json_query.php';
 		$this->item = ['id' => $id];
 
 		if (file_exists($queries)) {
