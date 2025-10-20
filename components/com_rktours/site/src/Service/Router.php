@@ -21,8 +21,11 @@ class Router extends RouterView {
 		$holiday->setKey('slug')->setParent($holidays);
 		$this->registerView($holiday);
 
+		$accommodations = new RouterViewConfiguration('accommodations');
+		$this->registerView($accommodations);
+
 		$accommodation = new RouterViewConfiguration('accommodation');
-		$accommodation->setKey('slug');
+		$accommodation->setKey('slug')->setParent($accommodations);
 		$this->registerView($accommodation);
 
 		$dataFeed = new RouterViewConfiguration('datafeed');
