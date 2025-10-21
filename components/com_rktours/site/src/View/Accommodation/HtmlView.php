@@ -29,20 +29,15 @@ class HtmlView extends BaseHtmlView
 			throw new Error('Unable to retrieve accommodation details from RezKit Tour Manager', 502);
 		}
 
-		$accommodation = $response->getData()['accommodation'] ?? null;
-
-		if ($accommodation === null) {
-			if (ctype_upper($this->slug)) {
-				$this->item = (object)[
-					'slug' => $this->slug,
-					'id' => null,
-					'name' => null,
-					'isPlaceholder' => true,
-				];
-			} else {
-				throw new ResourceNotFound("No accommodation found for the slug \"{$this->slug}\".", 404);
-			}
+		if (ctype_upper(substr($this->slug, 0, 3))) {
+			$this->item = $this->slug;
 		} else {
+			$accommodation = $response->getData()['accommodation'];
+
+			if ($accommodation === null) {
+				throw new ResourceNotFound("No accommodation found for the slug \"$this->slug\".", 404);
+			}
+
 			$this->item = $accommodation;
 		}
 
