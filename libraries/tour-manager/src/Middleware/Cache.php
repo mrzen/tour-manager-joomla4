@@ -8,17 +8,18 @@ use Joomla\CMS\Cache\Cache as JoomlaCache;
 use Joomla\CMS\Profiler\Profiler;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class Cache
 {
 
 	private JoomlaCache $cache;
 
-	public function __construct(int $ttl)
+	public function __construct(int $ttlMinutes)
 	{
 		$this->cache = new JoomlaCache([]);
-		$this->cache->setCaching($ttl > 0);
-		$this->cache->setLifeTime($ttl);
+		$this->cache->setCaching($ttlMinutes > 0);
+		$this->cache->setLifeTime($ttlMinutes);
 	}
 
 	public function __invoke(callable $next): callable
@@ -55,7 +56,7 @@ class Cache
 
 	public function getCacheKey(RequestInterface $request): string
 	{
-		$bodySum = hash('sha256', $request->getBody()->getContents());
+		$bodySum = hash('sha256', $this->readStream($request->getBody()));
 		$key = $request->getMethod() . $request->getRequestTarget() . $bodySum;
 
 		return $key;
@@ -66,9 +67,23 @@ class Cache
 		$data = [
 			'headers' => $response->getHeaders(),
 			'status' => $response->getStatusCode(),
-			'body' => $response->getBody()->getContents(),
+			'body' => $this->readStream($response->getBody()),
 		];
 
 		$this->cache->store(json_encode($data, JSON_PRETTY_PRINT), $key, 'tour_manager:graphql');
+	}
+
+	private function readStream(StreamInterface $stream): string
+	{
+		if (!$stream->isSeekable()) {
+			return (string) $stream;
+		}
+
+		$position = $stream->tell();
+		$stream->rewind();
+		$contents = $stream->getContents();
+		$stream->seek($position);
+
+		return $contents;
 	}
 }

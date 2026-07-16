@@ -12,6 +12,7 @@
         <field name="apikey" filter="safehtml" type="text" label="API Key" description="Tour Manager  API Key" />
         <field name="cache_ttl"
                type="number"
+               default="15"
                min="0"
                max="1440"
                label="Cache TTL"
