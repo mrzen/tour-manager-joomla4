@@ -19,17 +19,18 @@ require_once dirname(__FILE__) . '/../vendor/autoload.php';
 class Client
 {
 	public const DEFAULT_ENDPOINT = "https://tours.api.rezkit.app/graphql";
+	public const DEFAULT_CACHE_TTL_MINUTES = 15;
 
     public static function create(): GraphQLClient
     {
 		$params = ComponentHelper::getParams('com_rktours');
 		$endpoint = $params->get('apiendpoint', self::DEFAULT_ENDPOINT);
 		$apiKey = $params->get('apikey');
-		$ttl = $params->get('cache_ttl',  900);
+		$ttlMinutes = max(0, (int) $params->get('cache_ttl', self::DEFAULT_CACHE_TTL_MINUTES));
 
 		$stack = new HandlerStack();
 		$stack->setHandler(new CurlHandler());
-		$stack->push(new Cache($ttl));
+		$stack->push(new Cache($ttlMinutes));
 
 		return ClientBuilder::build(
 			$endpoint,
