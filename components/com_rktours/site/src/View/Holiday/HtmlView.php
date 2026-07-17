@@ -10,6 +10,8 @@ use RezKit\Tours\Client;
 class HtmlView extends BaseHtmlView {
 
 	public string $slug;
+	public ?string $version = null;
+	public ?array $versionItem = null;
 	protected $holiday;
 
 	protected $client;
@@ -18,22 +20,47 @@ class HtmlView extends BaseHtmlView {
 	{
 		$this->client = Client::create();
 
-		$response = $this->client->query(<<<'GRAPHQL'
-			query com_rktours_findHoliday($slug: String!) {
-				holiday(slug: $slug) {
-					id
-					code
-					name
-					published
-					search_public
-					seo {
-						meta_title
-						meta_description
+		if ($this->version) {
+			$response = $this->client->query(<<<'GRAPHQL'
+				query com_rktours_findHolidayVersion($slug: String!, $versionId: String!) {
+					holiday(slug: $slug) {
+						id
+						code
+						name
+						published
+						search_public
+						seo {
+							meta_title
+							meta_description
+						}
+						version(id: $versionId) {
+							id
+							name
+							description
+							introduction
+						}
 					}
 				}
-			}
-		GRAPHQL,
-		['slug' => $this->slug]);
+			GRAPHQL,
+			['slug' => $this->slug, 'versionId' => $this->version]);
+		} else {
+			$response = $this->client->query(<<<'GRAPHQL'
+				query com_rktours_findHoliday($slug: String!) {
+					holiday(slug: $slug) {
+						id
+						code
+						name
+						published
+						search_public
+						seo {
+							meta_title
+							meta_description
+						}
+					}
+				}
+			GRAPHQL,
+			['slug' => $this->slug]);
+		}
 
 		if ($response->hasErrors()) {
 			// Unable to load holiday for some unknown reason.
@@ -49,8 +76,9 @@ class HtmlView extends BaseHtmlView {
 		$this->item = $holiday;
 
 		if ($this->getLayout() === 'tripnote') {
-			$html = $holiday;
-			$source = $holiday;
+			if ($this->version && isset($holiday['version'])) {
+				$this->versionItem = $holiday['version'];
+			}
 		}
 
 		parent::display($tpl);

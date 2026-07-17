@@ -22,6 +22,7 @@ class DisplayController extends BaseController
 		if ($viewFormat === 'html') {
 			$view->slug   = $this->input->getString('slug');
 			$view->id     = $this->input->getString('id');
+			$view->version = $this->input->getString('version');
 			$view->setLayout($this->input->getCmd('layout', 'default'));
 		}
 
