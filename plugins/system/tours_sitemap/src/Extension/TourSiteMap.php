@@ -4,36 +4,70 @@
     use Alledia\OSMap\Plugin\Base;
     use Alledia\OSMap\Sitemap\Collector;
     use Alledia\OSMap\Sitemap\Item;
+    use Joomla\CMS\Log\Log;
     use Joomla\Registry\Registry;
-    use Joomla\CMS\Factory;
-    use Joomla\Database\DatabaseInterface;
+    use RezKit\Tours\Client;
 
     class TourSiteMap extends Base
     {
-        
+        private const LIST_HOLIDAYS_QUERY = /** @lang GraphQL */ <<<'GRAPHQL'
+            query tours_sitemap_listHolidays($cursor: String) {
+                holidays(after: $cursor, first: 100) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+
+                    edges {
+                        node {
+                            id
+                            name
+                            slug
+                            published
+                        }
+                    }
+                }
+            }
+        GRAPHQL;
+
         public function getComponentElement()
         {
             return 'com_rktours';
         }
 
         /**
-         * Get a list of all holidays.
+         * Get a list of all holidays from the Tour Manager API.
          *
          * @return array List of all holidays
          * @since 1.0
          */
         public function getHolidayList(): array
         {
-            /** @var DatabaseInterface $db */
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $q = $db->getQuery(true);
+            $client = Client::create();
 
-            $q = $q->select('id', 'rezkitid', 'tourname', 'tourcode', 'alias')
-                ->from('#__holidays')
-                ->order('id');
+            $holidays = [];
+            $cursor = null;
 
-            $db->setQuery($q);
-            $holidays = $db->loadObjectList('rezkitid');
+            do {
+                $response = $client->query(self::LIST_HOLIDAYS_QUERY, ['cursor' => $cursor]);
+
+                if ($response->hasErrors()) {
+                    Log::add(
+                        'Unable to retrieve holiday list from RezKit Tour Manager',
+                        Log::ERROR,
+                        'tours_sitemap'
+                    );
+                    break;
+                }
+
+                $page = $response->getData()['holidays'];
+
+                foreach ($page['edges'] as $edge) {
+                    $holidays[] = $edge['node'];
+                }
+
+                $cursor = $page['pageInfo']['endCursor'];
+            } while (!empty($page['pageInfo']['hasNextPage']) && $cursor !== null);
 
             return $holidays;
         }
@@ -47,23 +81,22 @@
          */
         public function getTree(Collector $collector, Item $parent, Registry $params)
         {
-            $holidays = $this->getHolidayList();
+            foreach ($this->getHolidayList() as $holiday) {
+                if (($holiday['published'] ?? true) === false || empty($holiday['slug'])) {
+                    continue;
+                }
 
-            var_dump($holidays);
-
-            foreach($holidays as $holiday) {
                 $collector->changeLevel(1);
-                $node = (object)array(
-                    'id'         => $holiday->id,
-                    'name'       => $holiday->name,
-                    'uid'        => $holiday->rezkitid,
-                    'link'       => 'index.php?option=rk_tours&view=holiday&id=' . $holiday->id,
+
+                $node = (object) array(
+                    'id'   => $holiday['id'],
+                    'uid'  => 'com_rktours.holiday.' . $holiday['id'],
+                    'name' => $holiday['name'],
+                    'link' => 'index.php?option=com_rktours&view=holiday&slug=' . $holiday['slug'],
                 );
 
                 $collector->printNode($node);
                 $collector->changeLevel(-1);
             }
-            
         }
     }
-?>
