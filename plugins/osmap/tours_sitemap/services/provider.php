@@ -30,7 +30,7 @@ return new class() implements ServiceProviderInterface {
 
 				$plugin = new TourSiteMap(
 					$subject,
-					(array) PluginHelper::getPlugin('system', 'tours_sitemap'),
+					(array) PluginHelper::getPlugin('osmap', 'tours_sitemap'),
 				);
 
 				$plugin->setApplication(Factory::getApplication());
